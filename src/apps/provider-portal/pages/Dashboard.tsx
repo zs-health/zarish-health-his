@@ -94,9 +94,17 @@ export function Dashboard() {
     return (
         <div className="space-y-8 animate-fade-in">
             {/* Header */}
-            <div className="page-header">
-                <h1 className="page-title">Dashboard</h1>
-                <p className="page-subtitle">Overview of ZARISH HEALTH Hospital Information System</p>
+            <div className="page-header flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <h1 className="page-title">Dashboard</h1>
+                    <p className="page-subtitle">Overview of ZARISH HEALTH Hospital Information System</p>
+                </div>
+                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${stats === demoStats
+                    ? 'bg-amber-50 text-amber-600 border-amber-200 animate-pulse'
+                    : 'bg-emerald-50 text-emerald-600 border-emerald-200 shadow-sm shadow-emerald-500/10'}`}>
+                    <div className={`w-1.5 h-1.5 rounded-full ${stats === demoStats ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+                    {stats === demoStats ? 'System Preview (Offline)' : 'Live Connectivity (Supabase)'}
+                </div>
             </div>
 
             {/* Stats Grid */}
@@ -215,8 +223,8 @@ export function Dashboard() {
                                 onClick={() => navigate(`/patients/${patient.id}`)}
                             >
                                 <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold ${patient.sex === 'Male'
-                                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                                        : 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400'
+                                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                                    : 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400'
                                     }`}>
                                     {patient.given_name[0]}{patient.family_name[0]}
                                 </div>

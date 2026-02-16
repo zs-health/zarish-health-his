@@ -19,6 +19,7 @@ import {
     X,
     ChevronLeft,
     Activity,
+    User,
 } from 'lucide-react';
 
 const providerNavItems = [
@@ -28,6 +29,7 @@ const providerNavItems = [
     { to: '/encounters/new', icon: Stethoscope, label: 'New Encounter' },
     { to: '/ncd/enrollment', icon: HeartPulse, label: 'NCD Enrollment' },
     { to: '/ncd/followup', icon: ClipboardList, label: 'NCD Follow-up' },
+    { to: '/profile', icon: User, label: 'Account Security' },
 ];
 
 const adminNavItems = [
@@ -38,7 +40,7 @@ const adminNavItems = [
 ];
 
 export function Layout() {
-    const { user, signOut } = useAuth();
+    const { user, userRole, signOut } = useAuth();
     const { sidebarCollapsed, setSidebarCollapsed } = useAppStore();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
@@ -96,12 +98,17 @@ export function Layout() {
 
                 <div className="my-4 border-t border-sidebar-border" />
 
-                {!sidebarCollapsed && (
+                {!sidebarCollapsed && (['super_admin', 'admin'].includes(userRole || '')) && (
                     <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider px-3 mb-2">
                         Administration
                     </p>
                 )}
-                {adminNavItems.map((item) => (
+                {adminNavItems.filter(item => {
+                    if (userRole === 'super_admin' || userRole === 'admin') return true;
+                    // For non-admins, only show safe items (like Inventory/Reports if allowed)
+                    if (['Facilities', 'User Management', 'Import Data'].includes(item.label)) return false;
+                    return true;
+                }).map((item) => (
                     <NavItem key={item.to} {...item} />
                 ))}
             </nav>
@@ -115,7 +122,7 @@ export function Layout() {
                     {!sidebarCollapsed && (
                         <div className="flex-1 min-w-0">
                             <p className="text-xs font-medium truncate">{user?.email || 'User'}</p>
-                            <p className="text-[10px] text-muted-foreground">Provider</p>
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{userRole?.replace('_', ' ') || 'Guest'}</p>
                         </div>
                     )}
                     <button

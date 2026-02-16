@@ -45,14 +45,13 @@ export interface Facility {
 }
 
 export type UserRole =
+    | 'super_admin'
     | 'admin'
-    | 'doctor'
-    | 'nurse'
-    | 'registrar'
-    | 'pharmacist'
-    | 'lab_tech'
+    | 'facility_manager'
+    | 'provider'
+    | 'chw'
     | 'data_entry'
-    | 'community_health_worker';
+    | 'viewer';
 
 export interface UserProfile {
     user_id: string;

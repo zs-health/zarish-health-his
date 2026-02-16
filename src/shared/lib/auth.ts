@@ -63,3 +63,23 @@ export async function resetPassword(email: string) {
     if (error) throw error;
     return data;
 }
+
+export async function updateEmail(newEmail: string) {
+    const { data, error } = await supabase.auth.updateUser({ email: newEmail });
+    if (error) throw error;
+    return data;
+}
+
+export async function updatePassword(newPassword: string) {
+    const { data, error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+    return data;
+}
+
+export async function enrollMFA() {
+    const { data, error } = await supabase.auth.mfa.enroll({
+        factorType: 'totp'
+    });
+    if (error) throw error;
+    return data;
+}
