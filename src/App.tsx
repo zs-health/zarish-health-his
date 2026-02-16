@@ -6,9 +6,10 @@ import { Dashboard } from '@/apps/provider-portal/pages/Dashboard';
 import { PatientSearch } from '@/apps/provider-portal/pages/PatientSearch';
 import { PatientRegistration } from '@/apps/provider-portal/pages/PatientRegistration';
 import { PatientDetail } from '@/apps/provider-portal/pages/PatientDetail';
-import { ClinicalEncounter } from '@/apps/provider-portal/pages/ClinicalEncounter';
-import { NCDEnrollment } from '@/apps/provider-portal/pages/NCDEnrollment';
-import { NCDFollowUp } from '@/apps/provider-portal/pages/NCDFollowUp';
+import { NCDScreening } from '@/apps/provider-portal/pages/NCDScreening';
+import { EncounterFlow } from '@/apps/provider-portal/pages/EncounterFlow';
+import { InventoryManager } from '@/apps/admin-portal/pages/InventoryManager';
+import { DispensingView } from '@/apps/provider-portal/pages/DispensingView';
 import { ImportWizard } from '@/apps/admin-portal/pages/ImportWizard';
 import { AdminFacilities, AdminUsers, AdminReports } from '@/apps/admin-portal/pages/AdminPages';
 
@@ -27,13 +28,14 @@ function App() {
                         <Route path="/patients/search" element={<PatientSearch />} />
                         <Route path="/patients/register" element={<PatientRegistration />} />
                         <Route path="/patients/:id" element={<PatientDetail />} />
-                        <Route path="/encounters/new" element={<ClinicalEncounter />} />
-                        <Route path="/ncd/enrollment" element={<NCDEnrollment />} />
-                        <Route path="/ncd/followup" element={<NCDFollowUp />} />
+                        <Route path="/encounters/new" element={<EncounterFlow />} />
+                        <Route path="/ncd/screening" element={<NCDScreening />} />
+                        <Route path="/pharmacy/dispensing" element={<DispensingView />} />
 
                         {/* Admin Portal */}
                         <Route path="/admin/facilities" element={<AdminFacilities />} />
                         <Route path="/admin/users" element={<AdminUsers />} />
+                        <Route path="/admin/inventory" element={<InventoryManager />} />
                         <Route path="/admin/import" element={<ImportWizard />} />
                         <Route path="/admin/reports" element={<AdminReports />} />
                     </Route>
