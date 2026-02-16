@@ -1,17 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/shared/lib/supabase';
 import {
-    Clock, CheckCircle2, User, Pill, ArrowRight,
-    Search, AlertCircle, Printer, Check
+    Clock, CheckCircle2, User, Pill, Search, AlertCircle, Printer, Check, Loader2
 } from 'lucide-react';
 
 export function DispensingView() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [hasPrescriptions, setHasPrescriptions] = useState(false);
+
+    useEffect(() => {
+        checkPrescriptions();
+    }, []);
+
+    const checkPrescriptions = async () => {
+        try {
+            const { count } = await supabase
+                .from('prescriptions')
+                .select('*', { count: 'exact', head: true })
+                .in('status', ['pending', 'processing']);
+            setHasPrescriptions(count ? count > 0 : false);
+        } catch (err) {
+            console.error('Error checking prescriptions:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const pendingOrders = [
-        { id: '1', patient: 'Abul Zarish', mrn: 'ZH-2026-0001', medications: ['Amlodipine 5mg', 'Metformin 500mg'], time: '10m ago', urgent: true },
-        { id: '2', patient: 'Zarish Khatun', mrn: 'ZH-2026-0042', medications: ['Losartan 50mg'], time: '25m ago', urgent: false },
-        { id: '3', patient: 'John Doe', mrn: 'ZH-2026-0105', medications: ['Atorvastatin 10mg', 'Amlodipine 5mg'], time: '1h ago', urgent: false },
+        { id: '1', patient: 'Abul Zarish', mrn: 'MRN-2026-0001', medications: ['Amlodipine 5mg', 'Metformin 500mg'], time: '10m ago', urgent: true },
+        { id: '2', patient: 'Zarish Khatun', mrn: 'MRN-2026-0042', medications: ['Losartan 50mg'], time: '25m ago', urgent: false },
+        { id: '3', patient: 'John Doe', mrn: 'MRN-2026-0105', medications: ['Atorvastatin 10mg', 'Amlodipine 5mg'], time: '1h ago', urgent: false },
     ];
+
+    const filteredOrders = pendingOrders.filter(order =>
+        order.patient.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.mrn.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="space-y-6 animate-fade-in pb-10">
@@ -29,36 +54,54 @@ export function DispensingView() {
                     <div className="bg-card p-4 rounded-xl border border-border/50 flex items-center gap-2">
                         <Search className="h-4 w-4 text-muted-foreground" />
                         <input
-                            type="text" placeholder="Search queue..."
+                            type="text"
+                            placeholder="Search queue..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="bg-transparent border-none text-sm outline-none w-full"
                         />
                     </div>
 
                     <div className="space-y-3">
-                        <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest pl-2">Pending Orders ({pendingOrders.length})</p>
-                        {pendingOrders.map(order => (
-                            <div key={order.id} className={`p-4 rounded-2xl border transition-all cursor-pointer group hover:shadow-md ${order.urgent ? 'bg-amber-50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-900/30' : 'bg-card hover:border-primary/50'}`}>
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-background border flex items-center justify-center font-black text-xs text-primary">
-                                            {order.patient.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <p className="font-black text-sm">{order.patient}</p>
-                                            <p className="text-[10px] text-muted-foreground">{order.mrn}</p>
-                                        </div>
-                                    </div>
-                                    <span className="text-[9px] font-bold text-muted-foreground flex items-center gap-1">
-                                        <Clock className="h-3 w-3" /> {order.time}
-                                    </span>
-                                </div>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {order.medications.map((m, idx) => (
-                                        <span key={idx} className="px-2 py-0.5 bg-background border rounded text-[9px] font-bold uppercase text-muted-foreground">{m}</span>
-                                    ))}
-                                </div>
+                        <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest pl-2">
+                            {loading ? 'Loading...' : `Pending Orders (${filteredOrders.length})`}
+                        </p>
+                        {loading ? (
+                            <div className="flex items-center justify-center py-8">
+                                <Loader2 className="h-6 w-6 animate-spin text-primary" />
                             </div>
-                        ))}
+                        ) : filteredOrders.length === 0 ? (
+                            <div className="text-center py-8 text-muted-foreground text-sm">
+                                {searchTerm ? 'No matching orders found' : 'No pending prescriptions'}
+                            </div>
+                        ) : (
+                            filteredOrders.map(order => (
+                                <div
+                                    key={order.id}
+                                    className={`p-4 rounded-2xl border transition-all cursor-pointer group hover:shadow-md ${order.urgent ? 'bg-amber-50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-900/30' : 'bg-card hover:border-primary/50'}`}
+                                >
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-background border flex items-center justify-center font-black text-xs text-primary">
+                                                {order.patient.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <p className="font-black text-sm">{order.patient}</p>
+                                                <p className="text-[10px] text-muted-foreground">{order.mrn}</p>
+                                            </div>
+                                        </div>
+                                        <span className="text-[9px] font-bold text-muted-foreground flex items-center gap-1">
+                                            <Clock className="h-3 w-3" /> {order.time}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {order.medications.map((m, idx) => (
+                                            <span key={idx} className="px-2 py-0.5 bg-background border rounded text-[9px] font-bold uppercase text-muted-foreground">{m}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
 
@@ -72,7 +115,7 @@ export function DispensingView() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-black tracking-tight">Abul Zarish</h3>
-                                    <p className="text-xs text-muted-foreground font-medium">MRN: ZH-2026-0001 · Encounter ID: E-48210</p>
+                                    <p className="text-xs text-muted-foreground font-medium">MRN: MRN-2026-0001</p>
                                 </div>
                             </div>
                             <button className="p-2.5 border rounded-xl hover:bg-muted/50 transition-all text-muted-foreground">
