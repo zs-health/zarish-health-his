@@ -1,11 +1,13 @@
 import { create } from 'zustand';
-import type { UserRole, Facility } from '@/shared/types';
+import type { UserRole, Facility, Program, UserProfile } from '@/shared/types';
 import type { User } from '@supabase/supabase-js';
 
 interface AppState {
     // Auth
     user: User | null;
     userRole: UserRole | null;
+    userProgram: Program | null;
+    userProfile: UserProfile | null;
     currentFacility: Facility | null;
     isAuthenticated: boolean;
     isLoading: boolean;
@@ -17,6 +19,8 @@ interface AppState {
     // Actions
     setUser: (user: User | null) => void;
     setUserRole: (role: UserRole | null) => void;
+    setUserProgram: (program: Program | null) => void;
+    setUserProfile: (profile: UserProfile | null) => void;
     setCurrentFacility: (facility: Facility | null) => void;
     setIsAuthenticated: (value: boolean) => void;
     setIsLoading: (value: boolean) => void;
@@ -29,6 +33,8 @@ export const useAppStore = create<AppState>((set) => ({
     // Auth
     user: null,
     userRole: null,
+    userProgram: null,
+    userProfile: null,
     currentFacility: null,
     isAuthenticated: false,
     isLoading: true,
@@ -40,6 +46,8 @@ export const useAppStore = create<AppState>((set) => ({
     // Actions
     setUser: (user) => set({ user }),
     setUserRole: (userRole) => set({ userRole }),
+    setUserProgram: (userProgram) => set({ userProgram }),
+    setUserProfile: (userProfile) => set({ userProfile }),
     setCurrentFacility: (currentFacility) => set({ currentFacility }),
     setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
     setIsLoading: (isLoading) => set({ isLoading }),
@@ -49,6 +57,8 @@ export const useAppStore = create<AppState>((set) => ({
         set({
             user: null,
             userRole: null,
+            userProgram: null,
+            userProfile: null,
             currentFacility: null,
             isAuthenticated: false,
         }),

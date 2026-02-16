@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { UserRole } from '@/shared/types';
+import type { UserRole, UserProfile } from '@/shared/types';
 
 export async function signInWithEmail(email: string, password: string) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -45,15 +45,22 @@ export async function getUser() {
     return data.user;
 }
 
-export async function getUserRole(userId: string): Promise<{ role: UserRole; facility_id?: string } | null> {
+export async function getUserProfile(userId: string): Promise<UserProfile | null> {
     const { data, error } = await supabase
         .from('user_roles')
-        .select('role, facility_id')
+        .select('*')
         .eq('user_id', userId)
         .single();
 
     if (error) return null;
-    return data as { role: UserRole; facility_id?: string };
+    return data as UserProfile;
+}
+
+// Backward compatibility
+export async function getUserRole(userId: string) {
+    const profile = await getUserProfile(userId);
+    if (!profile) return null;
+    return { role: profile.role, facility_id: profile.facility_id };
 }
 
 export async function resetPassword(email: string) {

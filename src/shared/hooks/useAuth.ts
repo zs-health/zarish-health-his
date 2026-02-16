@@ -1,16 +1,20 @@
 import { useEffect, useCallback } from 'react';
 import { supabase } from '@/shared/lib/supabase';
-import { getUserRole } from '@/shared/lib/auth';
+import { getUserProfile } from '@/shared/lib/auth';
 import { useAppStore } from '@/shared/stores/appStore';
 
 export function useAuth() {
     const {
         user,
         userRole,
+        userProgram,
+        userProfile,
         isAuthenticated,
         isLoading,
         setUser,
         setUserRole,
+        setUserProgram,
+        setUserProfile,
         setIsAuthenticated,
         setIsLoading,
         logout: clearStore,
@@ -26,12 +30,16 @@ export function useAuth() {
                 if (session?.user) {
                     setUser(session.user);
                     setIsAuthenticated(true);
-                    // Load role with error handling
+                    // Load profile with error handling
                     try {
-                        const roleData = await getUserRole(session.user.id);
-                        if (roleData) setUserRole(roleData.role);
+                        const profile = await getUserProfile(session.user.id);
+                        if (profile) {
+                            setUserRole(profile.role);
+                            setUserProgram(profile.program || null);
+                            setUserProfile(profile);
+                        }
                     } catch (e) {
-                        console.error('Role fetch error:', e);
+                        console.error('Profile fetch error:', e);
                     }
                 }
             } catch (err) {
@@ -48,8 +56,12 @@ export function useAuth() {
                 if (session?.user) {
                     setUser(session.user);
                     setIsAuthenticated(true);
-                    const roleData = await getUserRole(session.user.id);
-                    if (roleData) setUserRole(roleData.role);
+                    const profile = await getUserProfile(session.user.id);
+                    if (profile) {
+                        setUserRole(profile.role);
+                        setUserProgram(profile.program || null);
+                        setUserProfile(profile);
+                    }
                 } else {
                     clearStore();
                 }

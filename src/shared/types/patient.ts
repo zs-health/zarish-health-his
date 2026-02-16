@@ -42,6 +42,10 @@ export interface Patient {
     import_source?: string;
     import_date?: string;
     data_quality_score?: number;
+    registered_program?: 'HP' | 'HO' | 'HSS';
+    registered_by_user_id?: string;
+    primary_program?: 'HP' | 'HO' | 'HSS';
+    shared_with_programs?: string[];
     created_at: string;
     updated_at: string;
     deleted_at?: string;

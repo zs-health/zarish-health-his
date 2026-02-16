@@ -17,6 +17,8 @@ import { ImportWizard } from '@/apps/admin-portal/pages/ImportWizard';
 import { DataExport } from '@/apps/admin-portal/pages/DataExport';
 import { AdminFacilities, AdminUsers, AdminReports } from '@/apps/admin-portal/pages/AdminPages';
 import { ProfilePage } from '@/apps/provider-portal/pages/Profile';
+import { Referrals } from '@/apps/provider-portal/pages/Referrals';
+import { HomeVisits } from '@/apps/provider-portal/pages/HomeVisits';
 
 function App() {
     return (
@@ -42,6 +44,19 @@ function App() {
                         <Route path="/ncd/enrollment" element={<NCDEnrollment />} />
                         <Route path="/ncd/followup" element={<NCDFollowUp />} />
                         <Route path="/pharmacy/dispensing" element={<DispensingView />} />
+                        
+                        {/* Coordination */}
+                        <Route path="/coordination/referrals" element={
+                            <ProtectedRoute requiredProgram={['HP', 'HO']}>
+                                <Referrals />
+                            </ProtectedRoute>
+                        } />
+                        <Route path="/coordination/home-visits" element={
+                            <ProtectedRoute requiredProgram={['HO']}>
+                                <HomeVisits />
+                            </ProtectedRoute>
+                        } />
+
                         <Route path="/profile" element={<ProfilePage />} />
 
                         {/* Admin Portal - Protected by Role */}
