@@ -18,17 +18,19 @@ export function useAuth() {
 
     useEffect(() => {
         // Get initial session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        // Get initial session
+        const initSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
             if (session?.user) {
                 setUser(session.user);
                 setIsAuthenticated(true);
                 // Load role
-                getUserRole(session.user.id).then((roleData) => {
-                    if (roleData) setUserRole(roleData.role);
-                });
+                const roleData = await getUserRole(session.user.id);
+                if (roleData) setUserRole(roleData.role);
             }
             setIsLoading(false);
-        });
+        };
+        initSession();
 
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
