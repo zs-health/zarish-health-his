@@ -14,6 +14,7 @@ import {
     Users,
     Upload,
     BarChart3,
+    Download,
     LogOut,
     Menu,
     X,
@@ -36,6 +37,7 @@ const adminNavItems = [
     { to: '/admin/facilities', icon: Building2, label: 'Facilities' },
     { to: '/admin/users', icon: Users, label: 'User Management' },
     { to: '/admin/import', icon: Upload, label: 'Import Data' },
+    { to: '/admin/export', icon: Download, label: 'Data Export' },
     { to: '/admin/reports', icon: BarChart3, label: 'Reports' },
 ];
 
@@ -98,14 +100,17 @@ export function Layout() {
 
                 <div className="my-4 border-t border-sidebar-border" />
 
-                {!sidebarCollapsed && (['super_admin', 'admin'].includes(userRole || '')) && (
+                {!sidebarCollapsed && (['super_admin', 'admin', 'facility_manager', 'viewer', 'data_entry'].includes(userRole || '')) && (
                     <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider px-3 mb-2">
                         Administration
                     </p>
                 )}
                 {adminNavItems.filter(item => {
+                    // Show all admin items to super_admin and admin
                     if (userRole === 'super_admin' || userRole === 'admin') return true;
-                    // For non-admins, only show safe items (like Inventory/Reports if allowed)
+                    // Show Export and Reports to facility_manager, viewer, data_entry
+                    if (['Data Export', 'Reports'].includes(item.label)) return true;
+                    // Hide facilities and user management for non-admins
                     if (['Facilities', 'User Management', 'Import Data'].includes(item.label)) return false;
                     return true;
                 }).map((item) => (

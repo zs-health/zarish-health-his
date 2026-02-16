@@ -14,6 +14,7 @@ import { EncounterFlow } from '@/apps/provider-portal/pages/EncounterFlow';
 import { InventoryManager } from '@/apps/admin-portal/pages/InventoryManager';
 import { DispensingView } from '@/apps/provider-portal/pages/DispensingView';
 import { ImportWizard } from '@/apps/admin-portal/pages/ImportWizard';
+import { DataExport } from '@/apps/admin-portal/pages/DataExport';
 import { AdminFacilities, AdminUsers, AdminReports } from '@/apps/admin-portal/pages/AdminPages';
 import { ProfilePage } from '@/apps/provider-portal/pages/Profile';
 
@@ -61,6 +62,11 @@ function App() {
                             </ProtectedRoute>
                         } />
                         <Route path="/admin/reports" element={<AdminReports />} />
+                        <Route path="/admin/export" element={
+                            <ProtectedRoute requiredRole={['super_admin', 'admin', 'facility_manager', 'viewer', 'data_entry']}>
+                                <DataExport />
+                            </ProtectedRoute>
+                        } />
                     </Route>
 
                     {/* Catch-all */}
