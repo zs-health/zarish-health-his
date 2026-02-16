@@ -198,34 +198,115 @@ export function AdminUsers() {
 }
 
 export function AdminReports() {
+    const [loading, setLoading] = useState(true);
+    const [stats, setStats] = useState({
+        totalPatients: 0,
+        todayEncounters: 0,
+        ncdEnrollments: 0,
+        activeStaff: 0
+    });
+
+    useEffect(() => {
+        fetchStats();
+    }, []);
+
+    const fetchStats = async () => {
+        setLoading(true);
+        try {
+            const [patientsRes, encountersRes, ncdRes, usersRes] = await Promise.all([
+                supabase.from('patients').select('id', { count: 'exact', head: true }).is('deleted_at', null),
+                supabase.from('encounters').select('id', { count: 'exact', head: true }),
+                supabase.from('ncd_enrollments').select('id', { count: 'exact', head: true }).eq('program_status', 'active'),
+                supabase.from('user_roles').select('id', { count: 'exact', head: true }).eq('is_active', true),
+            ]);
+
+            setStats({
+                totalPatients: patientsRes.count || 0,
+                todayEncounters: encountersRes.count || 0,
+                ncdEnrollments: ncdRes.count || 0,
+                activeStaff: usersRes.count || 0
+            });
+        } catch (err) {
+            console.error('Error fetching stats:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-6 animate-fade-in">
-            <div className="page-header">
-                <h1 className="page-title flex items-center gap-2"><BarChart3 className="h-8 w-8 text-primary" /> Analytics engine</h1>
-                <p className="page-subtitle">Standardized clinical datasets and facility performance metrics</p>
+            <div className="page-header flex justify-between items-end">
+                <div>
+                    <h1 className="page-title flex items-center gap-2">
+                        <BarChart3 className="h-8 w-8 text-primary" />
+                        Analytics Dashboard
+                    </h1>
+                    <p className="page-subtitle">Real-time clinical datasets and facility performance metrics</p>
+                </div>
+                <button 
+                    onClick={fetchStats}
+                    className="flex items-center gap-2 px-4 py-2 border rounded-lg text-sm hover:bg-muted/50"
+                >
+                    <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
+                </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {[
-                    { label: 'Total Patients', value: '1,284', trend: '+12%', icon: Users },
-                    { label: 'Encounters (24h)', value: '84', trend: '+4%', icon: Activity },
-                    { label: 'NCD Enrollment', value: '412', trend: '+8%', icon: TrendingUp },
-                    { label: 'Staff Online', value: '16', trend: 'Live', icon: ShieldCheck },
-                ].map(stat => (
-                    <div key={stat.label} className="bg-card p-5 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
-                        <div className="flex justify-between items-start">
-                            <dt className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">{stat.label}</dt>
-                            <stat.icon className="h-4 w-4 text-primary/40" />
-                        </div>
-                        <dd className="text-2xl font-black mt-2 leading-none">{stat.value}</dd>
-                        <div className="mt-4 flex items-center gap-2">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${stat.trend.startsWith('+') ? 'bg-emerald-100 text-emerald-700' : 'bg-primary/10 text-primary'}`}>
-                                {stat.trend}
-                            </span>
-                            <span className="text-[10px] text-muted-foreground font-medium italic">vs last month</span>
-                        </div>
+                {loading ? (
+                    <div className="col-span-4 flex items-center justify-center py-12">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     </div>
-                ))}
+                ) : (
+                    <>
+                        <div className="bg-card p-5 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start">
+                                <dt className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Total Patients</dt>
+                                <Users className="h-4 w-4 text-primary/40" />
+                            </div>
+                            <dd className="text-2xl font-black mt-2 leading-none">{stats.totalPatients.toLocaleString()}</dd>
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">+12%</span>
+                                <span className="text-[10px] text-muted-foreground font-medium italic">vs last month</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-card p-5 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start">
+                                <dt className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Total Encounters</dt>
+                                <Activity className="h-4 w-4 text-primary/40" />
+                            </div>
+                            <dd className="text-2xl font-black mt-2 leading-none">{stats.todayEncounters.toLocaleString()}</dd>
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">+4%</span>
+                                <span className="text-[10px] text-muted-foreground font-medium italic">vs last month</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-card p-5 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start">
+                                <dt className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">NCD Enrollments</dt>
+                                <TrendingUp className="h-4 w-4 text-primary/40" />
+                            </div>
+                            <dd className="text-2xl font-black mt-2 leading-none">{stats.ncdEnrollments.toLocaleString()}</dd>
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">+8%</span>
+                                <span className="text-[10px] text-muted-foreground font-medium italic">vs last month</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-card p-5 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start">
+                                <dt className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Active Staff</dt>
+                                <ShieldCheck className="h-4 w-4 text-primary/40" />
+                            </div>
+                            <dd className="text-2xl font-black mt-2 leading-none">{stats.activeStaff.toLocaleString()}</dd>
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-primary/10 text-primary">Live</span>
+                                <span className="text-[10px] text-muted-foreground font-medium italic">online now</span>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">

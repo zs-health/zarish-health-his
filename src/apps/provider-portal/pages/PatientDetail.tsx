@@ -3,27 +3,32 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { usePatient } from '@/shared/hooks/usePatient';
 import { useNCD } from '@/shared/hooks/useNCD';
 import { formatDate, calculateAge, cn } from '@/shared/lib/utils';
-import type { Patient, NCDEnrollment } from '@/shared/types';
+import type { Patient, NCDEnrollment, Encounter, VitalSigns } from '@/shared/types';
 import {
     ArrowLeft, User, Phone, MapPin, FileText, HeartPulse,
-    Stethoscope, Calendar, Shield, Edit, Activity
+    Stethoscope, Calendar, Shield, Edit, Activity, Thermometer,
+    Droplets, Wind, Heart
 } from 'lucide-react';
 
 export function PatientDetail() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const { getPatient, loading: patientLoading } = usePatient();
+    const { getPatient, getEncounters, getVitalSigns, loading: patientLoading } = usePatient();
     const { getEnrollments } = useNCD();
     const [patient, setPatient] = useState<Patient | null>(null);
     const [enrollments, setEnrollments] = useState<NCDEnrollment[]>([]);
+    const [encounters, setEncounters] = useState<Encounter[]>([]);
+    const [vitals, setVitals] = useState<VitalSigns[]>([]);
     const [activeTab, setActiveTab] = useState('overview');
 
     useEffect(() => {
         if (id) {
             getPatient(id).then(setPatient);
             getEnrollments(id).then(setEnrollments);
+            getEncounters(id).then(setEncounters);
+            getVitalSigns(id).then(setVitals);
         }
-    }, [id, getPatient, getEnrollments]);
+    }, [id, getPatient, getEnrollments, getEncounters, getVitalSigns]);
 
     if (patientLoading) {
         return (
@@ -207,18 +212,137 @@ export function PatientDetail() {
             )}
 
             {(activeTab === 'encounters' || activeTab === 'vitals') && (
-                <div className="text-center py-12 bg-card rounded-xl border animate-fade-in">
-                    <Stethoscope className="h-12 w-12 text-muted-foreground/30 mx-auto" />
-                    <p className="mt-4 text-muted-foreground">
-                        {activeTab === 'encounters' ? 'No encounters recorded yet' : 'No vitals history available'}
-                    </p>
+                <div className="animate-fade-in">
                     {activeTab === 'encounters' && (
-                        <button
-                            onClick={() => navigate(`/encounters/new?patient=${patient.id}`)}
-                            className="mt-2 text-primary text-sm font-medium hover:underline"
-                        >
-                            Create First Encounter
-                        </button>
+                        <>
+                            {encounters.length > 0 ? (
+                                <div className="space-y-4">
+                                    {encounters.map(encounter => (
+                                        <div key={encounter.id} className="bg-card rounded-xl border p-5">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                                        <Stethoscope className="h-5 w-5 text-primary" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-semibold">{encounter.encounter_type}</h3>
+                                                        <p className="text-xs text-muted-foreground">
+                                                            {formatDate(encounter.visit_date)} · {encounter.encounter_status}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {encounter.referral_required && (
+                                                    <span className="badge-warning text-xs">Referral</span>
+                                                )}
+                                            </div>
+                                            {encounter.chief_complaint && (
+                                                <div className="mt-3 pt-3 border-t">
+                                                    <p className="text-sm"><span className="text-muted-foreground">Chief Complaint:</span> {encounter.chief_complaint}</p>
+                                                </div>
+                                            )}
+                                            {encounter.clinical_impression && (
+                                                <div className="mt-2">
+                                                    <p className="text-sm"><span className="text-muted-foreground">Assessment:</span> {encounter.clinical_impression}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-12 bg-card rounded-xl border">
+                                    <Stethoscope className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+                                    <p className="mt-4 text-muted-foreground">No encounters recorded yet</p>
+                                    <button
+                                        onClick={() => navigate(`/encounters/new?patient=${patient.id}`)}
+                                        className="mt-2 text-primary text-sm font-medium hover:underline"
+                                    >
+                                        Create First Encounter
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {activeTab === 'vitals' && (
+                        <>
+                            {vitals.length > 0 ? (
+                                <div className="space-y-4">
+                                    {vitals.map(vital => (
+                                        <div key={vital.id} className="bg-card rounded-xl border p-5">
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <Activity className="h-5 w-5 text-primary" />
+                                                    <span className="font-medium">{formatDate(vital.measurement_date)}</span>
+                                                </div>
+                                                {vital.measured_by && (
+                                                    <span className="text-xs text-muted-foreground">By: {vital.measured_by}</span>
+                                                )}
+                                            </div>
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+                                                {vital.systolic_bp && vital.diastolic_bp && (
+                                                    <div className="text-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg">
+                                                        <Heart className="h-5 w-5 text-red-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.systolic_bp}/{vital.diastolic_bp}</p>
+                                                        <p className="text-xs text-muted-foreground">BP (mmHg)</p>
+                                                    </div>
+                                                )}
+                                                {vital.heart_rate_bpm && (
+                                                    <div className="text-center p-3 bg-pink-50 dark:bg-pink-950/20 rounded-lg">
+                                                        <HeartPulse className="h-5 w-5 text-pink-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.heart_rate_bpm}</p>
+                                                        <p className="text-xs text-muted-foreground">Pulse (bpm)</p>
+                                                    </div>
+                                                )}
+                                                {vital.temperature_celsius && (
+                                                    <div className="text-center p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg">
+                                                        <Thermometer className="h-5 w-5 text-orange-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.temperature_celsius}°C</p>
+                                                        <p className="text-xs text-muted-foreground">Temp</p>
+                                                    </div>
+                                                )}
+                                                {vital.oxygen_saturation && (
+                                                    <div className="text-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
+                                                        <Wind className="h-5 w-5 text-blue-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.oxygen_saturation}%</p>
+                                                        <p className="text-xs text-muted-foreground">SpO2</p>
+                                                    </div>
+                                                )}
+                                                {vital.blood_glucose_mmol_l && (
+                                                    <div className="text-center p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
+                                                        <Droplets className="h-5 w-5 text-purple-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.blood_glucose_mmol_l}</p>
+                                                        <p className="text-xs text-muted-foreground">Glucose (mmol/L)</p>
+                                                    </div>
+                                                )}
+                                                {vital.weight_kg && (
+                                                    <div className="text-center p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
+                                                        <Activity className="h-5 w-5 text-green-500 mx-auto" />
+                                                        <p className="text-lg font-bold mt-1">{vital.weight_kg} kg</p>
+                                                        <p className="text-xs text-muted-foreground">Weight</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            {vital.clinical_notes && (
+                                                <div className="mt-3 pt-3 border-t text-sm">
+                                                    <span className="text-muted-foreground">Notes:</span> {vital.clinical_notes}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-12 bg-card rounded-xl border">
+                                    <Activity className="h-12 w-12 text-muted-foreground/30 mx-auto" />
+                                    <p className="mt-4 text-muted-foreground">No vitals history available</p>
+                                    <button
+                                        onClick={() => navigate(`/encounters/new?patient=${patient.id}`)}
+                                        className="mt-2 text-primary text-sm font-medium hover:underline"
+                                    >
+                                        Record Vitals
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             )}

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/shared/lib/supabase';
-import type { Patient, PatientSearchResult, PatientFormData } from '@/shared/types';
+import type { Patient, PatientSearchResult, PatientFormData, Encounter, VitalSigns } from '@/shared/types';
 
 export function usePatient() {
     const [loading, setLoading] = useState(false);
@@ -112,6 +112,48 @@ export function usePatient() {
         }
     }, []);
 
+    const getEncounters = useCallback(async (patientId: string): Promise<Encounter[]> => {
+        setLoading(true);
+        setError(null);
+        try {
+            const { data, error: err } = await supabase
+                .from('encounters')
+                .select('*')
+                .eq('patient_id', patientId)
+                .order('visit_date', { ascending: false })
+                .limit(50);
+
+            if (err) throw err;
+            return (data || []) as Encounter[];
+        } catch (e) {
+            setError(e instanceof Error ? e.message : 'Failed to load encounters');
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const getVitalSigns = useCallback(async (patientId: string): Promise<VitalSigns[]> => {
+        setLoading(true);
+        setError(null);
+        try {
+            const { data, error: err } = await supabase
+                .from('vital_signs')
+                .select('*')
+                .eq('patient_id', patientId)
+                .order('measurement_date', { ascending: false })
+                .limit(50);
+
+            if (err) throw err;
+            return (data || []) as VitalSigns[];
+        } catch (e) {
+            setError(e instanceof Error ? e.message : 'Failed to load vital signs');
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     return {
         loading,
         error,
@@ -120,5 +162,7 @@ export function usePatient() {
         createPatient,
         updatePatient,
         getRecentPatients,
+        getEncounters,
+        getVitalSigns,
     };
 }
