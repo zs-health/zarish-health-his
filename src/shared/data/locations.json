@@ -1,0 +1,3097 @@
+{
+  "bangladeshi": {
+    "districts": [
+      {
+        "name": "Bagerhat",
+        "upazilas": []
+      },
+      {
+        "name": "Bandarban",
+        "upazilas": []
+      },
+      {
+        "name": "Barguna",
+        "upazilas": []
+      },
+      {
+        "name": "Barisal",
+        "upazilas": []
+      },
+      {
+        "name": "Bhola",
+        "upazilas": []
+      },
+      {
+        "name": "Bogura",
+        "upazilas": []
+      },
+      {
+        "name": "Brahmanbaria",
+        "upazilas": []
+      },
+      {
+        "name": "Chandpur",
+        "upazilas": []
+      },
+      {
+        "name": "Chapainawabganj",
+        "upazilas": []
+      },
+      {
+        "name": "Chattogram",
+        "upazilas": []
+      },
+      {
+        "name": "Chuadanga",
+        "upazilas": []
+      },
+      {
+        "name": "Comilla",
+        "upazilas": []
+      },
+      {
+        "name": "Cox's Bazar",
+        "upazilas": [
+          "Ukhiya",
+          "Teknaf",
+          "Ramu",
+          "Chakaria",
+          "Pekua",
+          "Maheshkhali",
+          "Kutubdia",
+          "Cox's Bazar Sadar"
+        ]
+      },
+      {
+        "name": "Dhaka",
+        "upazilas": []
+      },
+      {
+        "name": "Dinajpur",
+        "upazilas": []
+      },
+      {
+        "name": "Faridpur",
+        "upazilas": []
+      },
+      {
+        "name": "Feni",
+        "upazilas": []
+      },
+      {
+        "name": "Gaibandha",
+        "upazilas": []
+      },
+      {
+        "name": "Gazipur",
+        "upazilas": []
+      },
+      {
+        "name": "Gopalganj",
+        "upazilas": []
+      },
+      {
+        "name": "Habiganj",
+        "upazilas": []
+      },
+      {
+        "name": "Jamalpur",
+        "upazilas": []
+      },
+      {
+        "name": "Jessore",
+        "upazilas": []
+      },
+      {
+        "name": "Jhalokati",
+        "upazilas": []
+      },
+      {
+        "name": "Jhenaidah",
+        "upazilas": []
+      },
+      {
+        "name": "Joypurhat",
+        "upazilas": []
+      },
+      {
+        "name": "Khagrachhari",
+        "upazilas": []
+      },
+      {
+        "name": "Khulna",
+        "upazilas": []
+      },
+      {
+        "name": "Kishoreganj",
+        "upazilas": []
+      },
+      {
+        "name": "Kurigram",
+        "upazilas": []
+      },
+      {
+        "name": "Kushtia",
+        "upazilas": []
+      },
+      {
+        "name": "Lakshmipur",
+        "upazilas": []
+      },
+      {
+        "name": "Lalmonirhat",
+        "upazilas": []
+      },
+      {
+        "name": "Madaripur",
+        "upazilas": []
+      },
+      {
+        "name": "Magura",
+        "upazilas": []
+      },
+      {
+        "name": "Manikganj",
+        "upazilas": []
+      },
+      {
+        "name": "Meherpur",
+        "upazilas": []
+      },
+      {
+        "name": "Moulvibazar",
+        "upazilas": []
+      },
+      {
+        "name": "Munshiganj",
+        "upazilas": []
+      },
+      {
+        "name": "Mymensingh",
+        "upazilas": []
+      },
+      {
+        "name": "Naogaon",
+        "upazilas": []
+      },
+      {
+        "name": "Narail",
+        "upazilas": []
+      },
+      {
+        "name": "Narayanganj",
+        "upazilas": []
+      },
+      {
+        "name": "Narsingdi",
+        "upazilas": []
+      },
+      {
+        "name": "Natore",
+        "upazilas": []
+      },
+      {
+        "name": "Netrokona",
+        "upazilas": []
+      },
+      {
+        "name": "Nilphamari",
+        "upazilas": []
+      },
+      {
+        "name": "Noakhali",
+        "upazilas": []
+      },
+      {
+        "name": "Pabna",
+        "upazilas": []
+      },
+      {
+        "name": "Panchagarh",
+        "upazilas": []
+      },
+      {
+        "name": "Patuakhali",
+        "upazilas": []
+      },
+      {
+        "name": "Pirojpur",
+        "upazilas": []
+      },
+      {
+        "name": "Rajbari",
+        "upazilas": []
+      },
+      {
+        "name": "Rajshahi",
+        "upazilas": []
+      },
+      {
+        "name": "Rangamati",
+        "upazilas": []
+      },
+      {
+        "name": "Rangpur",
+        "upazilas": []
+      },
+      {
+        "name": "Satkhira",
+        "upazilas": []
+      },
+      {
+        "name": "Shariatpur",
+        "upazilas": []
+      },
+      {
+        "name": "Sherpur",
+        "upazilas": []
+      },
+      {
+        "name": "Sirajganj",
+        "upazilas": []
+      },
+      {
+        "name": "Sunamganj",
+        "upazilas": []
+      },
+      {
+        "name": "Sylhet",
+        "upazilas": []
+      },
+      {
+        "name": "Tangail",
+        "upazilas": []
+      },
+      {
+        "name": "Thakurgaon",
+        "upazilas": []
+      }
+    ]
+  },
+  "rohingya": {
+    "camps": [
+      {
+        "name": "Camp 1E",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 1W",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 2E",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 2W",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 3",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 04",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 4 Ext",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 5",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 6",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 7",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 8E",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 8W",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 9",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 10",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 11",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 12",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 13",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 14",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 15",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 16",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 17",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 18",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 19",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 20",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 20 Ext",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 21",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 22",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 23",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 24",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 25",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 26",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Camp 27",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Kutupalong RC",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Nayapara RC",
+        "blocks": [
+          {
+            "name": "Block A",
+            "subblocks": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8"
+            ]
+          },
+          {
+            "name": "Block B",
+            "subblocks": [
+              "B1",
+              "B2",
+              "B3",
+              "B4",
+              "B5",
+              "B6",
+              "B7",
+              "B8"
+            ]
+          },
+          {
+            "name": "Block C",
+            "subblocks": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8"
+            ]
+          },
+          {
+            "name": "Block D",
+            "subblocks": [
+              "D1",
+              "D2",
+              "D3",
+              "D4",
+              "D5",
+              "D6",
+              "D7",
+              "D8"
+            ]
+          },
+          {
+            "name": "Block E",
+            "subblocks": [
+              "E1",
+              "E2",
+              "E3",
+              "E4",
+              "E5",
+              "E6",
+              "E7",
+              "E8"
+            ]
+          },
+          {
+            "name": "Block F",
+            "subblocks": [
+              "F1",
+              "F2",
+              "F3",
+              "F4",
+              "F5",
+              "F6",
+              "F7",
+              "F8"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

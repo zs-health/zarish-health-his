@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePatient } from '@/shared/hooks/usePatient';
 import { cn } from '@/shared/lib/utils';
 import { UserPlus, User, Phone, MapPin, FileText, Shield, Save, ArrowLeft } from 'lucide-react';
+import locationData from '@/shared/data/locations.json';
 
 export function PatientRegistration() {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ export function PatientRegistration() {
         registration_date: new Date().toISOString().split('T')[0],
         // Legacy IDs
         legacy_ncd_number: '', progress_id: '', ghc_number: '', fcn: '',
+        fcn_type: 'FCN', // FCN, MRC, Token
         // Address
         address_type: 'current', camp_name: '', block: '', new_sub_block: '',
         household_number: '', shelter_number: '',
@@ -26,11 +28,55 @@ export function PatientRegistration() {
     });
 
     const updateField = (field: string, value: unknown) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+        setFormData(prev => {
+            const newData = { ...prev, [field]: value };
+
+            // Reset dependent fields
+            if (field === 'origin') {
+                newData.division = ''; newData.district = ''; newData.upazila = ''; newData.village = '';
+                newData.camp_name = ''; newData.block = ''; newData.new_sub_block = '';
+            }
+            if (field === 'district') newData.upazila = '';
+            if (field === 'camp_name') newData.block = '';
+            if (field === 'block') newData.new_sub_block = '';
+
+            return newData;
+        });
     };
+
+    // Location memoizations
+    const availableDistricts = useMemo(() => {
+        return locationData.bangladeshi.districts;
+    }, []);
+
+    const selectedDistrictData = useMemo(() => {
+        return availableDistricts.find(d => d.name === formData.district);
+    }, [formData.district, availableDistricts]);
+
+    const availableCamps = useMemo(() => {
+        return locationData.rohingya.camps;
+    }, []);
+
+    const selectedCampData = useMemo(() => {
+        return availableCamps.find(c => c.name === formData.camp_name);
+    }, [formData.camp_name, availableCamps]);
+
+    const selectedBlockData = useMemo(() => {
+        return selectedCampData?.blocks.find(b => b.name === formData.block);
+    }, [formData.block, selectedCampData]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Validation for NID
+        if (formData.origin === 'Bangladeshi' && formData.national_id) {
+            const len = formData.national_id.length;
+            if (![10, 13, 17].includes(len)) {
+                alert("NID must be 10, 13, or 17 digits.");
+                return;
+            }
+        }
+
         const { address_type, camp_name, block, new_sub_block, household_number, shelter_number,
             division, district, upazila, village, ...patientFields } = formData;
 
@@ -209,61 +255,61 @@ export function PatientRegistration() {
 
                         {formData.origin === 'Rohingya' ? (
                             <>
-                                <p className="text-sm text-muted-foreground mb-2">Camp Address (Rohingya FDMN)</p>
+                                <p className="text-sm text-muted-foreground mb-4">Camp Address (Rohingya FDMN)</p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Camp Name</label>
-                                        <select value={formData.camp_name} onChange={(e) => updateField('camp_name', e.target.value)} className={inputClass}>
+                                        <label className="text-sm font-medium">Camp Name *</label>
+                                        <select value={formData.camp_name} onChange={(e) => updateField('camp_name', e.target.value)} className={inputClass} required>
                                             <option value="">Select camp...</option>
-                                            <option value="Camp-1W">Camp 1W</option>
-                                            <option value="Camp-04">Camp 04</option>
-                                            <option value="Camp-1E">Camp 1E</option>
-                                            <option value="Camp-2W">Camp 2W</option>
-                                            <option value="Camp-2E">Camp 2E</option>
+                                            {availableCamps.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Block</label>
-                                        <input type="text" value={formData.block} onChange={(e) => updateField('block', e.target.value)} className={inputClass} placeholder="e.g., A, B, C" />
+                                        <label className="text-sm font-medium">Main Block *</label>
+                                        <select value={formData.block} onChange={(e) => updateField('block', e.target.value)} className={inputClass} required disabled={!formData.camp_name}>
+                                            <option value="">Select block...</option>
+                                            {selectedCampData?.blocks.map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
+                                        </select>
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Sub-Block</label>
-                                        <input type="text" value={formData.new_sub_block} onChange={(e) => updateField('new_sub_block', e.target.value)} className={inputClass} />
+                                        <label className="text-sm font-medium">Sub-Block *</label>
+                                        <select value={formData.new_sub_block} onChange={(e) => updateField('new_sub_block', e.target.value)} className={inputClass} required disabled={!formData.block}>
+                                            <option value="">Select sub-block...</option>
+                                            {selectedBlockData?.subblocks.map(s => <option key={s} value={s}>{s}</option>)}
+                                        </select>
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Household #</label>
-                                        <input type="text" value={formData.household_number} onChange={(e) => updateField('household_number', e.target.value)} className={inputClass} />
+                                        <label className="text-sm font-medium">Household Number</label>
+                                        <input type="text" value={formData.household_number} onChange={(e) => updateField('household_number', e.target.value)} className={inputClass} placeholder="e.g., 123" />
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Shelter #</label>
+                                        <label className="text-sm font-medium">Shelter Number</label>
                                         <input type="text" value={formData.shelter_number} onChange={(e) => updateField('shelter_number', e.target.value)} className={inputClass} />
                                     </div>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <p className="text-sm text-muted-foreground mb-2">Bangladeshi Address</p>
+                                <p className="text-sm text-muted-foreground mb-4">Bangladeshi Address</p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Division</label>
-                                        <select value={formData.division} onChange={(e) => updateField('division', e.target.value)} className={inputClass}>
-                                            <option value="">Select...</option>
-                                            {['Chattogram', 'Dhaka', 'Khulna', 'Barishal', 'Rajshahi', 'Rangpur', 'Mymensingh', 'Sylhet'].map(d => (
-                                                <option key={d} value={d}>{d}</option>
-                                            ))}
+                                        <label className="text-sm font-medium">District *</label>
+                                        <select value={formData.district} onChange={(e) => updateField('district', e.target.value)} className={inputClass} required>
+                                            <option value="">Select district...</option>
+                                            {availableDistricts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">District</label>
-                                        <input type="text" value={formData.district} onChange={(e) => updateField('district', e.target.value)} className={inputClass} placeholder="e.g., Cox's Bazar" />
+                                        <label className="text-sm font-medium">Upazila *</label>
+                                        <select value={formData.upazila} onChange={(e) => updateField('upazila', e.target.value)} className={inputClass} required disabled={!formData.district}>
+                                            <option value="">Select upazila...</option>
+                                            {selectedDistrictData?.upazilas.map(u => <option key={u} value={u}>{u}</option>)}
+                                            {selectedDistrictData && selectedDistrictData.upazilas.length === 0 && <option value="N/A">Data Pending</option>}
+                                        </select>
                                     </div>
                                     <div className="input-group">
-                                        <label className="text-sm font-medium">Upazila</label>
-                                        <input type="text" value={formData.upazila} onChange={(e) => updateField('upazila', e.target.value)} className={inputClass} />
-                                    </div>
-                                    <div className="input-group">
-                                        <label className="text-sm font-medium">Village</label>
-                                        <input type="text" value={formData.village} onChange={(e) => updateField('village', e.target.value)} className={inputClass} />
+                                        <label className="text-sm font-medium">Union / Village *</label>
+                                        <input type="text" value={formData.village} onChange={(e) => updateField('village', e.target.value)} className={inputClass} required placeholder="Village or Ward" />
                                     </div>
                                 </div>
                             </>
@@ -274,26 +320,46 @@ export function PatientRegistration() {
                 {/* Identifiers */}
                 {activeTab === 'ids' && (
                     <div className="form-section animate-fade-in">
-                        <h3 className="form-section-title"><FileText className="h-5 w-5 text-primary" /> National & Legacy IDs</h3>
+                        <h3 className="form-section-title"><FileText className="h-5 w-5 text-primary" /> National & Program Identifiers</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div className="input-group">
-                                <label className="text-sm font-medium">National ID (NID)</label>
-                                <input type="text" value={formData.national_id} onChange={(e) => updateField('national_id', e.target.value)} className={inputClass} />
+                                <label className="text-sm font-medium">National ID / Birth Certificate</label>
+                                <input
+                                    type="text"
+                                    value={formData.national_id}
+                                    onChange={(e) => updateField('national_id', e.target.value)}
+                                    className={cn(inputClass, formData.origin === 'Bangladeshi' && formData.national_id && ![10, 13, 17].includes(formData.national_id.length) && "border-destructive focus:ring-destructive/30")}
+                                    placeholder="10, 13, or 17 digits"
+                                />
+                                {formData.origin === 'Bangladeshi' && formData.national_id && ![10, 13, 17].includes(formData.national_id.length) && (
+                                    <span className="text-[10px] text-destructive mt-1">NID must be 10, 13, or 17 digits</span>
+                                )}
                             </div>
+
                             <div className="input-group">
-                                <label className="text-sm font-medium">FCN (Rohingya)</label>
-                                <input type="text" value={formData.fcn} onChange={(e) => updateField('fcn', e.target.value)} className={inputClass} placeholder="Family Counting Number" />
+                                <div className="flex justify-between items-center mb-1">
+                                    <label className="text-sm font-medium">Legacy ID Type</label>
+                                </div>
+                                <div className="flex gap-2">
+                                    <select value={formData.fcn_type} onChange={(e) => updateField('fcn_type', e.target.value)} className={cn(inputClass, "w-1/3")}>
+                                        <option value="FCN">FCN</option>
+                                        <option value="MRC">MRC</option>
+                                        <option value="Token">Token</option>
+                                    </select>
+                                    <input type="text" value={formData.fcn} onChange={(e) => updateField('fcn', e.target.value)} className={cn(inputClass, "w-2/3")} placeholder="ID Number" />
+                                </div>
                             </div>
+
                             <div className="input-group">
-                                <label className="text-sm font-medium">Progress ID</label>
-                                <input type="text" value={formData.progress_id} onChange={(e) => updateField('progress_id', e.target.value)} className={inputClass} />
+                                <label className="text-sm font-medium">Progress ID (UNHCR)</label>
+                                <input type="text" value={formData.progress_id} onChange={(e) => updateField('progress_id', e.target.value)} className={inputClass} placeholder="880-XXXXXXXX" />
                             </div>
                             <div className="input-group">
                                 <label className="text-sm font-medium">GHC Number</label>
-                                <input type="text" value={formData.ghc_number} onChange={(e) => updateField('ghc_number', e.target.value)} className={inputClass} />
+                                <input type="text" value={formData.ghc_number} onChange={(e) => updateField('ghc_number', e.target.value)} className={inputClass} placeholder="General Health Card #" />
                             </div>
                             <div className="input-group">
-                                <label className="text-sm font-medium">Legacy NCD Number</label>
+                                <label className="text-sm font-medium">Legacy NCD Register #</label>
                                 <input type="text" value={formData.legacy_ncd_number} onChange={(e) => updateField('legacy_ncd_number', e.target.value)} className={inputClass} />
                             </div>
                         </div>
@@ -329,7 +395,7 @@ export function PatientRegistration() {
                 )}
 
                 {/* Submit */}
-                <div className="flex justify-end gap-3 pt-4">
+                <div className="flex justify-end gap-3 pt-4 border-t mt-8">
                     <button type="button" onClick={() => navigate(-1)} className="px-4 py-2.5 border rounded-lg text-sm hover:bg-muted/50 transition-colors">
                         Cancel
                     </button>
