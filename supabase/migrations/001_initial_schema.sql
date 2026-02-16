@@ -501,8 +501,8 @@ CREATE TRIGGER trg_treatment_protocols_updated_at
 -- 14. SEED DATA — Default Facilities
 -- ============================================================
 INSERT INTO facilities (facility_name, facility_type, camp_name, district, upazila) VALUES
-  ('CPI HP - Camp 1W', 'CPI HP', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
-  ('CPI HO - Camp 1W', 'CPI HO', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
-  ('CPI NCD - Camp 1W', 'CPI NCD', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
-  ('CPI HO - Camp 04', 'CPI HO', 'Camp-04', 'Cox''s Bazar', 'Ukhiya')
+  ('CPI Health Post - Camp 1W', 'CPI HP', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
+  ('CPI Health Outreach - Camp 1W', 'CPI HO', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
+  ('CPI NCD Corner - Camp 1W', 'CPI NCD', 'Camp-1W', 'Cox''s Bazar', 'Ukhiya'),
+  ('CPI Health Outreach - Camp 04', 'CPI HO', 'Camp-04', 'Cox''s Bazar', 'Ukhiya')
 ON CONFLICT DO NOTHING;

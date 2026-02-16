@@ -9,10 +9,10 @@ export function AdminFacilities() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
-                    { name: 'CPI HP - Camp 1W', type: 'CPI HP', status: 'active', patients: 312 },
-                    { name: 'CPI HO - Camp 1W', type: 'CPI HO', status: 'active', patients: 548 },
-                    { name: 'CPI NCD - Camp 1W', type: 'CPI NCD', status: 'active', patients: 245 },
-                    { name: 'CPI HO - Camp 04', type: 'CPI HO', status: 'active', patients: 198 },
+                    { name: 'CPI Health Post - Camp 1W', type: 'CPI HP', status: 'active', patients: 312 },
+                    { name: 'CPI Health Outreach - Camp 1W', type: 'CPI HO', status: 'active', patients: 548 },
+                    { name: 'CPI NCD Corner - Camp 1W', type: 'CPI NCD', status: 'active', patients: 245 },
+                    { name: 'CPI Health Outreach - Camp 04', type: 'CPI HO', status: 'active', patients: 198 },
                 ].map(facility => (
                     <div key={facility.name} className="bg-card rounded-xl border p-5 hover:shadow-md transition-all cursor-pointer group">
                         <div className="flex items-start justify-between">
