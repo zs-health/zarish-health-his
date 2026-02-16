@@ -52,9 +52,12 @@ export function usePatient() {
         setLoading(true);
         setError(null);
         try {
+            // Generate MRN if not provided - using client-side generation
+            const mrn = `MRN-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 999999)).padStart(6, '0')}`;
+            
             const { data, error: err } = await supabase
                 .from('patients')
-                .insert(patientData)
+                .insert({ ...patientData, mrn } as Record<string, unknown>)
                 .select()
                 .single();
 
