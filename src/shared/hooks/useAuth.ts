@@ -17,18 +17,28 @@ export function useAuth() {
     } = useAppStore();
 
     useEffect(() => {
-        // Get initial session
-        // Get initial session
+        // Get initial        // Get initial session
         const initSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                setUser(session.user);
-                setIsAuthenticated(true);
-                // Load role
-                const roleData = await getUserRole(session.user.id);
-                if (roleData) setUserRole(roleData.role);
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+                if (error) console.error('Session error:', error);
+
+                if (session?.user) {
+                    setUser(session.user);
+                    setIsAuthenticated(true);
+                    // Load role with error handling
+                    try {
+                        const roleData = await getUserRole(session.user.id);
+                        if (roleData) setUserRole(roleData.role);
+                    } catch (e) {
+                        console.error('Role fetch error:', e);
+                    }
+                }
+            } catch (err) {
+                console.error('Auth initialization error:', err);
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         };
         initSession();
 

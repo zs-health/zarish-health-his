@@ -45,6 +45,26 @@ export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) 
                     >
                         Sign Out
                     </button>
+
+                    <button
+                        onClick={async () => {
+                            try {
+                                const { supabase } = await import('@/shared/lib/supabase');
+                                const { data: { session } } = await supabase.auth.getSession();
+                                if (!session) {
+                                    alert('No session found');
+                                    return;
+                                }
+                                const { data, error } = await supabase.from('user_roles').select('*').eq('user_id', session.user.id);
+                                alert(`Debug Info:\nUser ID: ${session.user.id}\nError: ${JSON.stringify(error)}\nData: ${JSON.stringify(data)}`);
+                            } catch (e) {
+                                alert(`Error: ${e}`);
+                            }
+                        }}
+                        className="mt-4 block w-full text-center text-[10px] text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                        Debug Access
+                    </button>
                 </div>
             </div>
         );
