@@ -13,24 +13,53 @@ import { MERoutes } from './routes/MERoutes';
 import { DonorRoutes } from './routes/DonorRoutes';
 
 function AuthenticatedRoutes() {
-    const { userRole, user } = useAppStore();
+    const { userRole, user, isLoading } = useAppStore();
 
     useEffect(() => {
         if (user && userRole) {
             const targetRoute = getRouteForRole(userRole);
-            if (window.location.pathname === '/') {
+            if (window.location.pathname === '/' || window.location.pathname === '/login') {
                 window.history.replaceState(null, '', targetRoute);
             }
         }
     }, [user, userRole]);
 
+    // Show loading while checking auth
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // If no user, go to login
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    // If user exists but no role yet, use default HP dashboard
+    if (!userRole) {
+        return <HPRoutes />;
+    }
+
     switch (userRole) {
+        case 'super_admin':
+        case 'admin':
         case 'hp_coordinator':
         case 'hp_doctor':
         case 'hp_nurse':
         case 'hp_pharmacist':
         case 'hp_lab_tech':
         case 'hp_registrar':
+        case 'facility_manager':
+        case 'provider':
+        case 'chw':
+        case 'data_entry':
+        case 'viewer':
             return <HPRoutes />;
         case 'ho_coordinator':
         case 'ho_chw':
@@ -51,12 +80,7 @@ function AuthenticatedRoutes() {
         case 'donor':
             return <DonorRoutes />;
         default:
-            return (
-                <Routes>
-                    <Route path="/" element={<Navigate to="/login" replace />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            );
+            return <HPRoutes />;
     }
 }
 
