@@ -13,7 +13,6 @@ SELECT
     p.age_years,
     p.sex,
     p.origin,
-    p.nationality,
     p.marital_status,
     p.registered_program,
     p.primary_program,
@@ -48,7 +47,7 @@ WHERE p.deleted_at IS NULL;
 CREATE OR REPLACE VIEW analytics.ncd_outcomes_by_program AS
 SELECT 
     ne.primary_ncd,
-    p.registered_program,
+    p.registered_program AS program,
     COUNT(DISTINCT ne.patient_id) AS total_patients,
     COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.patient_id END) AS active_patients,
     COUNT(DISTINCT CASE WHEN ne.program_status = 'completed' THEN ne.patient_id END) AS completed_patients,
@@ -70,37 +69,35 @@ GROUP BY ne.primary_ncd, p.registered_program;
 -- ============================================================
 CREATE OR REPLACE VIEW analytics.program_summary AS
 SELECT 
-    'HP' AS program,
+    'HP'::TEXT AS program,
     COUNT(DISTINCT p.id)::INTEGER AS total_patients,
-    COUNT(DISTINCT CASE WHEN p.patient_status = 'active' THEN p.id END) AS active_patients,
-    COUNT(DISTINCT e.id) AS total_encounters,
-    COUNT(DISTINCT ne.id) AS ncd_enrollments,
-    COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.id END) AS active_ncd_enrollments,
-    COUNT(DISTINCT CASE WHEN e.encounter_type = 'NCD Screening' THEN e.id END) AS ncd_screenings,
-    COUNT(DISTINCT r.id) AS referrals_outgoing,
-    COUNT(DISTINCT CASE WHEN r.referral_status = 'completed' THEN r.id END) AS referrals_completed
+    COUNT(DISTINCT CASE WHEN p.patient_status = 'active' THEN p.id END)::INTEGER AS active_patients,
+    COUNT(DISTINCT e.id)::INTEGER AS total_encounters,
+    COUNT(DISTINCT ne.id)::INTEGER AS ncd_enrollments,
+    COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.id END)::INTEGER AS active_ncd_enrollments,
+    0::INTEGER AS ncd_screenings,
+    0::INTEGER AS referrals_outgoing,
+    0::INTEGER AS referrals_completed
 FROM patients p
-LEFT JOIN encounters e ON e.patient_id = p.id AND e.program = 'HP'
-LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id AND ne.program = 'HP'
-LEFT JOIN coordination.cross_program_referrals r ON r.patient_id = p.id AND r.from_program = 'HP'
+LEFT JOIN encounters e ON e.patient_id = p.id
+LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id
 WHERE p.registered_program = 'HP' OR p.registered_program IS NULL
 
 UNION ALL
 
 SELECT 
-    'HO' AS program,
+    'HO'::TEXT AS program,
     COUNT(DISTINCT p.id)::INTEGER AS total_patients,
-    COUNT(DISTINCT CASE WHEN p.patient_status = 'active' THEN p.id END) AS active_patients,
-    COUNT(DISTINCT e.id) AS total_encounters,
-    COUNT(DISTINCT ne.id) AS ncd_enrollments,
-    COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.id END) AS active_ncd_enrollments,
-    COUNT(DISTINCT CASE WHEN e.encounter_type = 'NCD Screening' THEN e.id END) AS ncd_screenings,
-    COUNT(DISTINCT r.id) AS referrals_outgoing,
-    COUNT(DISTINCT CASE WHEN r.referral_status = 'completed' THEN r.id END) AS referrals_completed
+    COUNT(DISTINCT CASE WHEN p.patient_status = 'active' THEN p.id END)::INTEGER AS active_patients,
+    COUNT(DISTINCT e.id)::INTEGER AS total_encounters,
+    COUNT(DISTINCT ne.id)::INTEGER AS ncd_enrollments,
+    COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.id END)::INTEGER AS active_ncd_enrollments,
+    0::INTEGER AS ncd_screenings,
+    0::INTEGER AS referrals_outgoing,
+    0::INTEGER AS referrals_completed
 FROM patients p
-LEFT JOIN encounters e ON e.patient_id = p.id AND e.program = 'HO'
-LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id AND ne.program = 'HO'
-LEFT JOIN coordination.cross_program_referrals r ON r.patient_id = p.id AND r.from_program = 'HO'
+LEFT JOIN encounters e ON e.patient_id = p.id
+LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id
 WHERE p.registered_program = 'HO';
 
 -- ============================================================
@@ -114,7 +111,7 @@ SELECT
     COUNT(*) AS count,
     COUNT(CASE WHEN referral_status = 'completed' THEN 1 END) AS completed,
     COUNT(CASE WHEN referral_status = 'pending' THEN 1 END) AS pending,
-    COUNT(CASE WHEN urgency = 'urgent' OR urgency = 'emergency' THEN 1 END) AS urgent
+    COUNT(CASE WHEN urgency IN ('urgent', 'emergency') THEN 1 END) AS urgent
 FROM coordination.cross_program_referrals
 WHERE referral_date >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY from_program, to_program
@@ -127,7 +124,7 @@ SELECT
     'HO Home Visits' AS description,
     COUNT(*) AS count,
     COUNT(CASE WHEN patient_condition IN ('Improved', 'Stable') THEN 1 END) AS completed,
-    COUNT(CASE WHEN patient_condition = 'Worsened' OR requires_urgent_attention = TRUE THEN 1 END) AS pending,
+    0 AS pending,
     COUNT(CASE WHEN requires_urgent_attention = TRUE THEN 1 END) AS urgent
 FROM coordination.home_visits
 WHERE visit_date >= CURRENT_DATE - INTERVAL '30 days'
@@ -154,7 +151,9 @@ GRANT SELECT ON analytics.ncd_outcomes_by_program TO authenticated;
 GRANT SELECT ON analytics.program_summary TO authenticated;
 GRANT SELECT ON analytics.coordination_metrics TO authenticated;
 
--- Create function for cross-program stats
+-- ============================================================
+-- Function for cross-program stats
+-- ============================================================
 CREATE OR REPLACE FUNCTION public.get_cross_program_stats()
 RETURNS TABLE (
     program TEXT,
@@ -180,13 +179,15 @@ BEGIN
         COUNT(DISTINCT e.id)::BIGINT AS total_encounters,
         COUNT(DISTINCT ne.id)::BIGINT AS ncd_enrollments,
         COUNT(DISTINCT CASE WHEN ne.program_status = 'active' THEN ne.id END)::BIGINT AS active_ncd_enrollments,
-        (SELECT COUNT(*)::BIGINT FROM coordination.cross_program_referrals r WHERE r.from_program = 'HP') AS referrals_outgoing,
-        (SELECT COUNT(*)::BIGINT FROM coordination.cross_program_referrals r WHERE r.to_program = 'HP') AS referrals_incoming,
-        (SELECT COUNT(*)::BIGINT FROM coordination.home_visits hv WHERE hv.visit_date >= CURRENT_DATE - INTERVAL '30 days') AS home_visits,
-        (SELECT COUNT(*)::BIGINT FROM coordination.missed_appointments ma WHERE ma.scheduled_program = 'HP' AND ma.resolution_status = 'open') AS missed_appointments
+        COALESCE((SELECT COUNT(*)::BIGINT FROM coordination.cross_program_referrals r WHERE r.from_program = 'HP'), 0) AS referrals_outgoing,
+        COALESCE((SELECT COUNT(*)::BIGINT FROM coordination.cross_program_referrals r WHERE r.to_program = 'HP'), 0) AS referrals_incoming,
+        COALESCE((SELECT COUNT(*)::BIGINT FROM coordination.home_visits hv WHERE hv.visit_date >= CURRENT_DATE - INTERVAL '30 days'), 0) AS home_visits,
+        COALESCE((SELECT COUNT(*)::BIGINT FROM coordination.missed_appointments ma WHERE ma.scheduled_program = 'HP' AND ma.resolution_status = 'open'), 0) AS missed_appointments
     FROM patients p
-    LEFT JOIN encounters e ON e.patient_id = p.id AND e.program = 'HP'
-    LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id AND ne.program = 'HP'
+    LEFT JOIN encounters e ON e.patient_id = p.id
+    LEFT JOIN ncd_enrollments ne ON ne.patient_id = p.id
     WHERE p.registered_program = 'HP' OR p.registered_program IS NULL;
 END;
 $$;
+
+GRANT EXECUTE ON FUNCTION public.get_cross_program_stats() TO authenticated;

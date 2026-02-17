@@ -4,11 +4,14 @@
 -- Description: Cross-program referrals, follow-ups, home visits, missed appointments
 -- ============================================================
 
+-- Enable UUID extension if not exists
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- ============================================================
 -- Cross-Program Referrals
 -- ============================================================
 CREATE TABLE IF NOT EXISTS coordination.cross_program_referrals (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     
     -- Referral Information
     patient_id UUID NOT NULL REFERENCES patients(id),
@@ -72,7 +75,7 @@ CREATE INDEX IF NOT EXISTS idx_referrals_referred_by ON coordination.cross_progr
 -- Shared Follow-ups (HP ↔ HO)
 -- ============================================================
 CREATE TABLE IF NOT EXISTS coordination.shared_follow_ups (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     
     patient_id UUID NOT NULL REFERENCES patients(id),
     ncd_enrollment_id UUID REFERENCES ncd_enrollments(id),
@@ -123,7 +126,7 @@ CREATE INDEX IF NOT EXISTS idx_follow_ups_enrollment ON coordination.shared_foll
 -- Home Visits (HO-specific, visible to HP)
 -- ============================================================
 CREATE TABLE IF NOT EXISTS coordination.home_visits (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     
     patient_id UUID NOT NULL REFERENCES patients(id),
     
@@ -194,7 +197,7 @@ CREATE INDEX IF NOT EXISTS idx_home_visits_facility ON coordination.home_visits(
 -- Missed Appointments Sharing (HP → HO for follow-up)
 -- ============================================================
 CREATE TABLE IF NOT EXISTS coordination.missed_appointments (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     
     patient_id UUID NOT NULL REFERENCES patients(id),
     appointment_id UUID,
