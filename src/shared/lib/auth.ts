@@ -46,14 +46,32 @@ export async function getUser() {
 }
 
 export async function getUserRole(userId: string): Promise<{ role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> } | null> {
-    const { data, error } = await supabase
-        .from('user_roles')
-        .select('role, facility_id, program, permissions')
-        .eq('user_id', userId)
-        .single();
+    console.log('[Auth] getUserRole called for:', userId);
+    
+    // Add timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+        const { data, error } = await supabase
+            .from('user_roles')
+            .select('role, facility_id, program, permissions')
+            .eq('user_id', userId)
+            .single();
 
-    if (error) return null;
-    return data as { role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> };
+        clearTimeout(timeoutId);
+
+        if (error) {
+            console.log('[Auth] getUserRole error:', error.message);
+            return null;
+        }
+        console.log('[Auth] getUserRole result:', data);
+        return data as { role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> };
+    } catch (e: any) {
+        clearTimeout(timeoutId);
+        console.log('[Auth] getUserRole exception:', e.message);
+        return null;
+    }
 }
 
 export async function resetPassword(email: string) {

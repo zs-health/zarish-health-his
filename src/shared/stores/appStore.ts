@@ -11,6 +11,7 @@ interface AppState {
     currentFacility: Facility | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    authError: string | null;
 
     // UI
     sidebarOpen: boolean;
@@ -24,6 +25,7 @@ interface AppState {
     setCurrentFacility: (facility: Facility | null) => void;
     setIsAuthenticated: (value: boolean) => void;
     setIsLoading: (value: boolean) => void;
+    setAuthError: (error: string | null) => void;
     toggleSidebar: () => void;
     setSidebarCollapsed: (value: boolean) => void;
     logout: () => void;
@@ -38,6 +40,7 @@ export const useAppStore = create<AppState>((set) => ({
     currentFacility: null,
     isAuthenticated: false,
     isLoading: true,
+    authError: null,
 
     // UI
     sidebarOpen: true,
@@ -51,6 +54,7 @@ export const useAppStore = create<AppState>((set) => ({
     setCurrentFacility: (currentFacility) => set({ currentFacility }),
     setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
     setIsLoading: (isLoading) => set({ isLoading }),
+    setAuthError: (authError) => set({ authError }),
     toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
     setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
     logout: () =>
@@ -61,5 +65,6 @@ export const useAppStore = create<AppState>((set) => ({
             userPermissions: null,
             currentFacility: null,
             isAuthenticated: false,
+            authError: null,
         }),
 }));

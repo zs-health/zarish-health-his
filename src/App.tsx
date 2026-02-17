@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/shared/components/AuthProvider';
 import { LoginPage } from '@/apps/auth/LoginPage';
+import { DebugPage } from '@/apps/auth/DebugPage';
 import { getRouteForRole } from '@/shared/hooks/useUserProfile';
 import { useAppStore } from '@/shared/stores/appStore';
 import { useEffect } from 'react';
@@ -90,6 +91,7 @@ function App() {
             <AuthProvider>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/debug" element={<DebugPage />} />
                     <Route path="*" element={<AuthenticatedRoutes />} />
                 </Routes>
             </AuthProvider>
