@@ -7,10 +7,14 @@ export function useAuth() {
     const {
         user,
         userRole,
+        userProgram,
+        userPermissions,
         isAuthenticated,
         isLoading,
         setUser,
         setUserRole,
+        setUserProgram,
+        setUserPermissions,
         setIsAuthenticated,
         setIsLoading,
         logout: clearStore,
@@ -41,6 +45,8 @@ export function useAuth() {
                         const roleData = await getUserRole(session.user.id);
                         if (roleData) {
                             setUserRole(roleData.role);
+                            setUserProgram(roleData.program as 'HP' | 'HO' | 'HSS' | null);
+                            setUserPermissions(roleData.permissions || null);
                         } else {
                             console.warn('No role found for user');
                         }
@@ -58,7 +64,7 @@ export function useAuth() {
         initSession();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
+            async (event, session) => {
                 try {
                     if (session?.user) {
                         setUser(session.user);
@@ -66,6 +72,8 @@ export function useAuth() {
                         const roleData = await getUserRole(session.user.id);
                         if (roleData) {
                             setUserRole(roleData.role);
+                            setUserProgram(roleData.program as 'HP' | 'HO' | 'HSS' | null);
+                            setUserPermissions(roleData.permissions || null);
                         }
                     } else {
                         clearStore();
@@ -81,7 +89,7 @@ export function useAuth() {
         return () => {
             subscription.unsubscribe();
         };
-    }, [setUser, setUserRole, setIsAuthenticated, setIsLoading, clearStore]);
+    }, [setUser, setUserRole, setUserProgram, setUserPermissions, setIsAuthenticated, setIsLoading, clearStore]);
 
     const signOut = useCallback(async () => {
         await supabase.auth.signOut();
@@ -91,6 +99,8 @@ export function useAuth() {
     return {
         user,
         userRole,
+        userProgram,
+        userPermissions,
         isAuthenticated,
         isLoading,
         signOut,

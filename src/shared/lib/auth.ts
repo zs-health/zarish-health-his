@@ -45,15 +45,15 @@ export async function getUser() {
     return data.user;
 }
 
-export async function getUserRole(userId: string): Promise<{ role: UserRole; facility_id?: string } | null> {
+export async function getUserRole(userId: string): Promise<{ role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> } | null> {
     const { data, error } = await supabase
         .from('user_roles')
-        .select('role, facility_id')
+        .select('role, facility_id, program, permissions')
         .eq('user_id', userId)
         .single();
 
     if (error) return null;
-    return data as { role: UserRole; facility_id?: string };
+    return data as { role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> };
 }
 
 export async function resetPassword(email: string) {

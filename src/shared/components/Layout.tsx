@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { useAppStore } from '@/shared/stores/appStore';
@@ -41,7 +41,11 @@ const adminNavItems = [
     { to: '/admin/reports', icon: BarChart3, label: 'Reports' },
 ];
 
-export function Layout() {
+interface LayoutProps {
+    children?: ReactNode;
+}
+
+export function Layout({ children }: LayoutProps) {
     const { user, userRole, signOut } = useAuth();
     const { sidebarCollapsed, setSidebarCollapsed } = useAppStore();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -184,7 +188,7 @@ export function Layout() {
             {/* Main content */}
             <main className={cn('flex-1 min-h-screen transition-all duration-300')}>
                 <div className="p-4 lg:p-8 max-w-7xl mx-auto">
-                    <Outlet />
+                    {children || <Outlet />}
                 </div>
             </main>
         </div>

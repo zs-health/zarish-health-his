@@ -51,15 +51,44 @@ export type UserRole =
     | 'provider'
     | 'chw'
     | 'data_entry'
-    | 'viewer';
+    | 'viewer'
+    | 'hp_coordinator'
+    | 'hp_doctor'
+    | 'hp_nurse'
+    | 'hp_pharmacist'
+    | 'hp_lab_tech'
+    | 'hp_registrar'
+    | 'ho_coordinator'
+    | 'ho_chw'
+    | 'ho_nurse'
+    | 'ho_educator'
+    | 'hss_coordinator'
+    | 'hss_trainer'
+    | 'hss_quality_officer'
+    | 'hss_data_officer'
+    | 'management'
+    | 'researcher'
+    | 'me_officer'
+    | 'donor';
+
+export type Program = 'HP' | 'HO' | 'HSS' | null;
 
 export interface UserProfile {
     user_id: string;
     role: UserRole;
     facility_id?: string;
-    permissions?: Record<string, boolean>;
+    program?: Program;
+    permissions?: Record<string, Record<string, boolean>>;
+    access_scope?: string[];
+    can_view_hp_data?: boolean;
+    can_view_ho_data?: boolean;
+    can_view_hss_data?: boolean;
+    can_share_to_hp?: boolean;
+    can_share_to_ho?: boolean;
+    can_share_to_hss?: boolean;
     created_at: string;
     // Joined
     facility?: Facility;
     email?: string;
+    full_name?: string;
 }
