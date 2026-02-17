@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/shared/lib/supabase';
 import { getUserRole } from '@/shared/lib/auth';
 import { useAppStore } from '@/shared/stores/appStore';
@@ -16,22 +16,36 @@ export function useAuth() {
         logout: clearStore,
     } = useAppStore();
 
+    const initialized = useRef(false);
+
     useEffect(() => {
-        // Get initial        // Get initial session
+        if (initialized.current) return;
+        initialized.current = true;
+
         const initSession = async () => {
             try {
+                setIsLoading(true);
                 const { data: { session }, error } = await supabase.auth.getSession();
-                if (error) console.error('Session error:', error);
+                
+                if (error) {
+                    console.error('Session error:', error);
+                    setIsLoading(false);
+                    return;
+                }
 
                 if (session?.user) {
                     setUser(session.user);
                     setIsAuthenticated(true);
-                    // Load role with error handling
+                    
                     try {
                         const roleData = await getUserRole(session.user.id);
-                        if (roleData) setUserRole(roleData.role);
-                    } catch (e) {
-                        console.error('Role fetch error:', e);
+                        if (roleData) {
+                            setUserRole(roleData.role);
+                        } else {
+                            console.warn('No role found for user');
+                        }
+                    } catch (roleError) {
+                        console.error('Role fetch error:', roleError);
                     }
                 }
             } catch (err) {
@@ -40,24 +54,33 @@ export function useAuth() {
                 setIsLoading(false);
             }
         };
+
         initSession();
 
-        // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
-                if (session?.user) {
-                    setUser(session.user);
-                    setIsAuthenticated(true);
-                    const roleData = await getUserRole(session.user.id);
-                    if (roleData) setUserRole(roleData.role);
-                } else {
-                    clearStore();
+                try {
+                    if (session?.user) {
+                        setUser(session.user);
+                        setIsAuthenticated(true);
+                        const roleData = await getUserRole(session.user.id);
+                        if (roleData) {
+                            setUserRole(roleData.role);
+                        }
+                    } else {
+                        clearStore();
+                    }
+                } catch (err) {
+                    console.error('Auth state change error:', err);
+                } finally {
+                    setIsLoading(false);
                 }
-                setIsLoading(false);
             }
         );
 
-        return () => subscription.unsubscribe();
+        return () => {
+            subscription.unsubscribe();
+        };
     }, [setUser, setUserRole, setIsAuthenticated, setIsLoading, clearStore]);
 
     const signOut = useCallback(async () => {
