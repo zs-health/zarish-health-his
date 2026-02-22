@@ -1,12 +1,13 @@
 import { create } from 'zustand';
-import type { UserRole, Facility, Program } from '@/shared/types';
+import type { UserRole, Facility, Program, UserProfile } from '@/shared/types';
 import type { User } from '@supabase/supabase-js';
 
 interface AppState {
     // Auth
     user: User | null;
     userRole: UserRole | null;
-    userProgram: Program;
+    userProgram: Program | null;
+    userProfile: UserProfile | null;
     userPermissions: Record<string, Record<string, boolean>> | null;
     currentFacility: Facility | null;
     isAuthenticated: boolean;
@@ -20,7 +21,8 @@ interface AppState {
     // Actions
     setUser: (user: User | null) => void;
     setUserRole: (role: UserRole | null) => void;
-    setUserProgram: (program: Program) => void;
+    setUserProgram: (program: Program | null) => void;
+    setUserProfile: (profile: UserProfile | null) => void;
     setUserPermissions: (permissions: Record<string, Record<string, boolean>> | null) => void;
     setCurrentFacility: (facility: Facility | null) => void;
     setIsAuthenticated: (value: boolean) => void;
@@ -36,6 +38,7 @@ export const useAppStore = create<AppState>((set) => ({
     user: null,
     userRole: null,
     userProgram: null,
+    userProfile: null,
     userPermissions: null,
     currentFacility: null,
     isAuthenticated: false,
@@ -50,6 +53,7 @@ export const useAppStore = create<AppState>((set) => ({
     setUser: (user) => set({ user }),
     setUserRole: (userRole) => set({ userRole }),
     setUserProgram: (userProgram) => set({ userProgram }),
+    setUserProfile: (userProfile) => set({ userProfile }),
     setUserPermissions: (userPermissions) => set({ userPermissions }),
     setCurrentFacility: (currentFacility) => set({ currentFacility }),
     setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
@@ -62,6 +66,7 @@ export const useAppStore = create<AppState>((set) => ({
             user: null,
             userRole: null,
             userProgram: null,
+            userProfile: null,
             userPermissions: null,
             currentFacility: null,
             isAuthenticated: false,

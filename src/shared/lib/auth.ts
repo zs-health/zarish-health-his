@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { UserRole } from '@/shared/types';
+import type { UserRole, UserProfile } from '@/shared/types';
 
 export async function signInWithEmail(email: string, password: string) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -45,8 +45,8 @@ export async function getUser() {
     return data.user;
 }
 
-export async function getUserRole(userId: string): Promise<{ role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> } | null> {
-    console.log('[Auth] getUserRole called for:', userId);
+export async function getUserProfile(userId: string): Promise<UserProfile | null> {
+    console.log('[Auth] getUserProfile called for:', userId);
     
     // Add timeout to prevent hanging
     const controller = new AbortController();
@@ -55,23 +55,35 @@ export async function getUserRole(userId: string): Promise<{ role: UserRole; fac
     try {
         const { data, error } = await supabase
             .from('user_roles')
-            .select('role, facility_id, program, permissions')
+            .select('*')
             .eq('user_id', userId)
             .single();
 
         clearTimeout(timeoutId);
 
         if (error) {
-            console.log('[Auth] getUserRole error:', error.message);
+            console.log('[Auth] getUserProfile error:', error.message);
             return null;
         }
-        console.log('[Auth] getUserRole result:', data);
-        return data as { role: UserRole; facility_id?: string; program?: string; permissions?: Record<string, Record<string, boolean>> };
+        console.log('[Auth] getUserProfile result:', data);
+        return data as UserProfile;
     } catch (e: any) {
         clearTimeout(timeoutId);
-        console.log('[Auth] getUserRole exception:', e.message);
+        console.log('[Auth] getUserProfile exception:', e.message);
         return null;
     }
+}
+
+// Backward compatibility
+export async function getUserRole(userId: string) {
+    const profile = await getUserProfile(userId);
+    if (!profile) return null;
+    return { 
+        role: profile.role, 
+        facility_id: profile.facility_id,
+        program: profile.program,
+        permissions: profile.permissions
+    };
 }
 
 export async function resetPassword(email: string) {

@@ -21,6 +21,8 @@ import {
     ChevronLeft,
     Activity,
     User,
+    Home,
+    ArrowRightLeft,
 } from 'lucide-react';
 
 const providerNavItems = [
@@ -30,6 +32,8 @@ const providerNavItems = [
     { to: '/encounters/new', icon: Stethoscope, label: 'New Encounter' },
     { to: '/ncd/enrollment', icon: HeartPulse, label: 'NCD Enrollment' },
     { to: '/ncd/followup', icon: ClipboardList, label: 'NCD Follow-up' },
+    { to: '/coordination/referrals', icon: ArrowRightLeft, label: 'Referrals', program: ['HP', 'HO'] },
+    { to: '/coordination/home-visits', icon: Home, label: 'Home Visits', program: ['HO'] },
     { to: '/profile', icon: User, label: 'Account Security' },
 ];
 
@@ -74,6 +78,8 @@ export function Layout({ children }: LayoutProps) {
         </NavLink>
     );
 
+    const { userProgram } = useAppStore();
+
     const SidebarContent = () => (
         <div className="flex flex-col h-full">
             {/* Logo */}
@@ -84,7 +90,7 @@ export function Layout({ children }: LayoutProps) {
                     </div>
                     {!sidebarCollapsed && (
                         <div>
-                            <h1 className="text-base font-bold tracking-tight">ZARISH HEALTH</h1>
+                            <h1 className="text-base font-bold tracking-tight">ZARISH HEALTH {userProgram ? `(${userProgram})` : ''}</h1>
                             <p className="text-[10px] text-muted-foreground font-medium tracking-wider uppercase">Hospital Information System</p>
                         </div>
                     )}
@@ -98,7 +104,10 @@ export function Layout({ children }: LayoutProps) {
                         Clinical
                     </p>
                 )}
-                {providerNavItems.map((item) => (
+                {providerNavItems.filter(item => {
+                    if (!item.program) return true;
+                    return userProgram && item.program.includes(userProgram);
+                }).map((item) => (
                     <NavItem key={item.to} {...item} />
                 ))}
 

@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { supabase } from '@/shared/lib/supabase';
+import { getUserProfile } from '@/shared/lib/auth';
 import { useAppStore } from '@/shared/stores/appStore';
 
 export function useAuth() {
@@ -7,12 +8,14 @@ export function useAuth() {
         user,
         userRole,
         userProgram,
+        userProfile,
         userPermissions,
         isAuthenticated,
         isLoading,
         setUser,
         setUserRole,
         setUserProgram,
+        setUserProfile,
         setUserPermissions,
         setIsAuthenticated,
         setIsLoading,
@@ -59,24 +62,24 @@ export function useAuth() {
                     setUser(session.user);
                     setIsAuthenticated(true);
                     
-                    // Simple role assignment - skip complex fetching for now
-                    setUserRole('super_admin');
-                    setUserProgram(null);
-                    setUserPermissions({
-                        patient: { view: true, create: true, update: true, delete: true },
-                        encounter: { view: true, create: true, update: true },
-                        ncd: { view: true, create: true, update: true },
-                        prescription: { view: true, create: true },
-                        lab: { view: true, create: true, update: true },
-                        billing: { view: true, create: true },
-                        analytics: { view: true, export: true },
-                        reports: { view: true, export: true },
-                        import: { execute: true },
-                        users: { view: true, create: true, update: true },
-                        settings: { view: true, update: true }
-                    });
-                    
-                    console.log('[Auth] Role set to super_admin');
+                    // Load profile with error handling
+                    try {
+                        const profile = await getUserProfile(session.user.id);
+                        if (profile) {
+                            setUserRole(profile.role);
+                            setUserProgram(profile.program || null);
+                            setUserProfile(profile);
+                            setUserPermissions(profile.permissions as any);
+                            console.log('[Auth] Profile loaded for:', profile.role);
+                        } else {
+                            // Fallback if no profile found
+                            console.log('[Auth] No profile found, using defaults');
+                            setUserRole('super_admin');
+                            setUserProgram(null);
+                        }
+                    } catch (e) {
+                        console.error('[Auth] Profile fetch error:', e);
+                    }
                 } else {
                     console.log('[Auth] No session - user not logged in');
                 }
@@ -101,7 +104,13 @@ export function useAuth() {
                 if (session?.user) {
                     setUser(session.user);
                     setIsAuthenticated(true);
-                    setUserRole('super_admin');
+                    const profile = await getUserProfile(session.user.id);
+                    if (profile) {
+                        setUserRole(profile.role);
+                        setUserProgram(profile.program || null);
+                        setUserProfile(profile);
+                        setUserPermissions(profile.permissions as any);
+                    }
                 } else if (event === 'SIGNED_OUT') {
                     clearStore();
                 }
@@ -112,7 +121,7 @@ export function useAuth() {
             clearTimeout(timeoutId);
             subscription.unsubscribe();
         };
-    }, [setUser, setUserRole, setUserProgram, setUserPermissions, setIsAuthenticated, setIsLoading, setAuthError, clearStore]);
+    }, [setUser, setUserRole, setUserProgram, setUserProfile, setUserPermissions, setIsAuthenticated, setIsLoading, setAuthError, clearStore]);
 
     const signOut = useCallback(async () => {
         console.log('[Auth] Signing out...');
@@ -125,6 +134,7 @@ export function useAuth() {
         userRole,
         userProgram,
         userPermissions,
+        userProfile,
         isAuthenticated,
         isLoading: isLoading || !checked,
         signOut,
