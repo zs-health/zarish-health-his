@@ -1,91 +1,98 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/shared/components/AuthProvider';
-import { Layout } from '@/shared/components/Layout';
 import { LoginPage } from '@/apps/auth/LoginPage';
-import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
-import { Dashboard } from '@/apps/provider-portal/pages/Dashboard';
-import { PatientSearch } from '@/apps/provider-portal/pages/PatientSearch';
-import { PatientRegistration } from '@/apps/provider-portal/pages/PatientRegistration';
-import { PatientDetail } from '@/apps/provider-portal/pages/PatientDetail';
-import { NCDScreening } from '@/apps/provider-portal/pages/NCDScreening';
-import { NCDEnrollment } from '@/apps/provider-portal/pages/NCDEnrollment';
-import { NCDFollowUp } from '@/apps/provider-portal/pages/NCDFollowUp';
-import { EncounterFlow } from '@/apps/provider-portal/pages/EncounterFlow';
-import { InventoryManager } from '@/apps/admin-portal/pages/InventoryManager';
-import { DispensingView } from '@/apps/provider-portal/pages/DispensingView';
-import { ImportWizard } from '@/apps/admin-portal/pages/ImportWizard';
-import { DataExport } from '@/apps/admin-portal/pages/DataExport';
-import { AdminFacilities, AdminUsers, AdminReports } from '@/apps/admin-portal/pages/AdminPages';
-import { ProfilePage } from '@/apps/provider-portal/pages/Profile';
-import { Referrals } from '@/apps/provider-portal/pages/Referrals';
-import { HomeVisits } from '@/apps/provider-portal/pages/HomeVisits';
+import { DebugPage } from '@/apps/auth/DebugPage';
+import { getRouteForRole } from '@/shared/hooks/useUserProfile';
+import { useAppStore } from '@/shared/stores/appStore';
+import { useEffect } from 'react';
+import { HPRoutes } from './routes/HPRoutes';
+import { HORoutes } from './routes/HORoutes';
+import { HSSRoutes } from './routes/HSSRoutes';
+import { ManagementRoutes } from './routes/ManagementRoutes';
+import { ResearcherRoutes } from './routes/ResearcherRoutes';
+import { MERoutes } from './routes/MERoutes';
+import { DonorRoutes } from './routes/DonorRoutes';
+
+function AuthenticatedRoutes() {
+    const { userRole, user, isLoading } = useAppStore();
+
+    useEffect(() => {
+        if (user && userRole) {
+            const targetRoute = getRouteForRole(userRole);
+            if (window.location.pathname === '/' || window.location.pathname === '/login') {
+                window.history.replaceState(null, '', targetRoute);
+            }
+        }
+    }, [user, userRole]);
+
+    // Show loading while checking auth
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // If no user, go to login
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    // If user exists but no role yet, use default HP dashboard
+    if (!userRole) {
+        return <HPRoutes />;
+    }
+
+    switch (userRole) {
+        case 'super_admin':
+        case 'admin':
+        case 'hp_coordinator':
+        case 'hp_doctor':
+        case 'hp_nurse':
+        case 'hp_pharmacist':
+        case 'hp_lab_tech':
+        case 'hp_registrar':
+        case 'facility_manager':
+        case 'provider':
+        case 'chw':
+        case 'data_entry':
+        case 'viewer':
+            return <HPRoutes />;
+        case 'ho_coordinator':
+        case 'ho_chw':
+        case 'ho_nurse':
+        case 'ho_educator':
+            return <HORoutes />;
+        case 'hss_coordinator':
+        case 'hss_trainer':
+        case 'hss_quality_officer':
+        case 'hss_data_officer':
+            return <HSSRoutes />;
+        case 'management':
+            return <ManagementRoutes />;
+        case 'researcher':
+            return <ResearcherRoutes />;
+        case 'me_officer':
+            return <MERoutes />;
+        case 'donor':
+            return <DonorRoutes />;
+        default:
+            return <HPRoutes />;
+    }
+}
 
 function App() {
     return (
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
-                    {/* Auth */}
                     <Route path="/login" element={<LoginPage />} />
-
-                    {/* Main app with Layout and Protection */}
-                    <Route element={
-                        <ProtectedRoute>
-                            <Layout />
-                        </ProtectedRoute>
-                    }>
-                        {/* Provider Portal */}
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/patients/search" element={<PatientSearch />} />
-                        <Route path="/patients/register" element={<PatientRegistration />} />
-                        <Route path="/patients/:id" element={<PatientDetail />} />
-                        <Route path="/encounters/new" element={<EncounterFlow />} />
-                        <Route path="/ncd/screening" element={<NCDScreening />} />
-                        <Route path="/ncd/enrollment" element={<NCDEnrollment />} />
-                        <Route path="/ncd/followup" element={<NCDFollowUp />} />
-                        <Route path="/pharmacy/dispensing" element={<DispensingView />} />
-                        
-                        {/* Coordination */}
-                        <Route path="/coordination/referrals" element={
-                            <ProtectedRoute requiredProgram={['HP', 'HO']}>
-                                <Referrals />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/coordination/home-visits" element={
-                            <ProtectedRoute requiredProgram={['HO']}>
-                                <HomeVisits />
-                            </ProtectedRoute>
-                        } />
-
-                        <Route path="/profile" element={<ProfilePage />} />
-
-                        {/* Admin Portal - Protected by Role */}
-                        <Route path="/admin/facilities" element={
-                            <ProtectedRoute requiredRole={['super_admin', 'admin']}>
-                                <AdminFacilities />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/admin/users" element={
-                            <ProtectedRoute requiredRole={['super_admin', 'admin']}>
-                                <AdminUsers />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/admin/inventory" element={<InventoryManager />} />
-                        <Route path="/admin/import" element={
-                            <ProtectedRoute requiredRole={['super_admin', 'admin']}>
-                                <ImportWizard />
-                            </ProtectedRoute>
-                        } />
-                        <Route path="/admin/reports" element={<AdminReports />} />
-                        <Route path="/admin/export" element={
-                            <ProtectedRoute requiredRole={['super_admin', 'admin', 'facility_manager', 'viewer', 'data_entry']}>
-                                <DataExport />
-                            </ProtectedRoute>
-                        } />
-                    </Route>
-
-                    {/* Catch-all */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path="/debug" element={<DebugPage />} />
+                    <Route path="*" element={<AuthenticatedRoutes />} />
                 </Routes>
             </AuthProvider>
         </BrowserRouter>

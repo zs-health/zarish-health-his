@@ -5,9 +5,16 @@ import { useAppStore } from '@/shared/stores/appStore';
 export function useExport() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { userRole } = useAppStore();
+    const { userRole, userPermissions } = useAppStore();
 
-    const canExport = ['super_admin', 'admin', 'facility_manager', 'viewer', 'data_entry'].includes(userRole || '');
+    const canExport = [
+        'super_admin', 'admin', 'facility_manager', 'viewer', 'data_entry',
+        'hp_coordinator', 'ho_coordinator', 'hss_coordinator',
+        'management', 'researcher', 'me_officer'
+    ].includes(userRole || '') || 
+    userPermissions?.analytics?.export === true;
+
+    const canExportDeidentified = userRole === 'researcher' || userPermissions?.analytics?.export === true;
 
     const exportPatients = useCallback(async (filters?: {
         facility_id?: string;
@@ -397,16 +404,129 @@ export function useExport() {
         }
     }, [canExport]);
 
+    const exportDeidentifiedPatients = useCallback(async (filters?: {
+        program?: string;
+        date_from?: string;
+        date_to?: string;
+    }) => {
+        if (!canExportDeidentified) {
+            setError('You do not have permission to export data');
+            return null;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            let query = supabase
+                .from('analytics.patients_deidentified')
+                .select('*');
+
+            if (filters?.program && filters.program !== 'all') {
+                query = query.eq('registered_program', filters.program);
+            }
+            if (filters?.date_from) {
+                query = query.gte('registration_date', filters.date_from);
+            }
+            if (filters?.date_to) {
+                query = query.lte('registration_date', filters.date_to);
+            }
+
+            const { data, error: err } = await query;
+
+            if (err) throw err;
+
+            if (data && data.length > 0) {
+                const csv = convertToCSV(data);
+                downloadCSV(csv, `patients_deidentified_${new Date().toISOString().split('T')[0]}`);
+                return data.length;
+            }
+
+            return 0;
+        } catch (e) {
+            setError(e instanceof Error ? e.message : 'Export failed');
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, [canExportDeidentified]);
+
+    const exportNCDOutcomesByProgram = useCallback(async () => {
+        if (!canExportDeidentified) {
+            setError('You do not have permission to export data');
+            return null;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const { data, error: err } = await supabase
+                .from('analytics.ncd_outcomes_by_program')
+                .select('*');
+
+            if (err) throw err;
+
+            if (data && data.length > 0) {
+                const csv = convertToCSV(data);
+                downloadCSV(csv, `ncd_outcomes_by_program_${new Date().toISOString().split('T')[0]}`);
+                return data.length;
+            }
+
+            return 0;
+        } catch (e) {
+            setError(e instanceof Error ? e.message : 'Export failed');
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, [canExportDeidentified]);
+
+    const exportProgramSummary = useCallback(async () => {
+        if (!canExportDeidentified) {
+            setError('You do not have permission to export data');
+            return null;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const { data, error: err } = await supabase
+                .from('analytics.program_summary')
+                .select('*');
+
+            if (err) throw err;
+
+            if (data && data.length > 0) {
+                const csv = convertToCSV(data);
+                downloadCSV(csv, `program_summary_${new Date().toISOString().split('T')[0]}`);
+                return data.length;
+            }
+
+            return 0;
+        } catch (e) {
+            setError(e instanceof Error ? e.message : 'Export failed');
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, [canExportDeidentified]);
+
     return {
         loading,
         error,
         canExport,
+        canExportDeidentified,
         exportPatients,
         exportEncounters,
         exportNCDEnrollments,
         exportVitalSigns,
         exportFollowUps,
-        exportResearchData
+        exportResearchData,
+        exportDeidentifiedPatients,
+        exportNCDOutcomesByProgram,
+        exportProgramSummary,
     };
 }
 

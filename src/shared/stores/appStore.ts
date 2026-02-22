@@ -8,9 +8,11 @@ interface AppState {
     userRole: UserRole | null;
     userProgram: Program | null;
     userProfile: UserProfile | null;
+    userPermissions: Record<string, Record<string, boolean>> | null;
     currentFacility: Facility | null;
     isAuthenticated: boolean;
     isLoading: boolean;
+    authError: string | null;
 
     // UI
     sidebarOpen: boolean;
@@ -21,9 +23,11 @@ interface AppState {
     setUserRole: (role: UserRole | null) => void;
     setUserProgram: (program: Program | null) => void;
     setUserProfile: (profile: UserProfile | null) => void;
+    setUserPermissions: (permissions: Record<string, Record<string, boolean>> | null) => void;
     setCurrentFacility: (facility: Facility | null) => void;
     setIsAuthenticated: (value: boolean) => void;
     setIsLoading: (value: boolean) => void;
+    setAuthError: (error: string | null) => void;
     toggleSidebar: () => void;
     setSidebarCollapsed: (value: boolean) => void;
     logout: () => void;
@@ -35,9 +39,11 @@ export const useAppStore = create<AppState>((set) => ({
     userRole: null,
     userProgram: null,
     userProfile: null,
+    userPermissions: null,
     currentFacility: null,
     isAuthenticated: false,
     isLoading: true,
+    authError: null,
 
     // UI
     sidebarOpen: true,
@@ -48,9 +54,11 @@ export const useAppStore = create<AppState>((set) => ({
     setUserRole: (userRole) => set({ userRole }),
     setUserProgram: (userProgram) => set({ userProgram }),
     setUserProfile: (userProfile) => set({ userProfile }),
+    setUserPermissions: (userPermissions) => set({ userPermissions }),
     setCurrentFacility: (currentFacility) => set({ currentFacility }),
     setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
     setIsLoading: (isLoading) => set({ isLoading }),
+    setAuthError: (authError) => set({ authError }),
     toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
     setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
     logout: () =>
@@ -59,7 +67,9 @@ export const useAppStore = create<AppState>((set) => ({
             userRole: null,
             userProgram: null,
             userProfile: null,
+            userPermissions: null,
             currentFacility: null,
             isAuthenticated: false,
+            authError: null,
         }),
 }));

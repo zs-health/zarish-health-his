@@ -46,21 +46,44 @@ export async function getUser() {
 }
 
 export async function getUserProfile(userId: string): Promise<UserProfile | null> {
-    const { data, error } = await supabase
-        .from('user_roles')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
+    console.log('[Auth] getUserProfile called for:', userId);
+    
+    // Add timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+        const { data, error } = await supabase
+            .from('user_roles')
+            .select('*')
+            .eq('user_id', userId)
+            .single();
 
-    if (error) return null;
-    return data as UserProfile;
+        clearTimeout(timeoutId);
+
+        if (error) {
+            console.log('[Auth] getUserProfile error:', error.message);
+            return null;
+        }
+        console.log('[Auth] getUserProfile result:', data);
+        return data as UserProfile;
+    } catch (e: any) {
+        clearTimeout(timeoutId);
+        console.log('[Auth] getUserProfile exception:', e.message);
+        return null;
+    }
 }
 
 // Backward compatibility
 export async function getUserRole(userId: string) {
     const profile = await getUserProfile(userId);
     if (!profile) return null;
-    return { role: profile.role, facility_id: profile.facility_id };
+    return { 
+        role: profile.role, 
+        facility_id: profile.facility_id,
+        program: profile.program,
+        permissions: profile.permissions
+    };
 }
 
 export async function resetPassword(email: string) {
