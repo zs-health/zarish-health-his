@@ -1,6 +1,6 @@
-# ZARISH HEALTH HIS v3: Setup & Management Guide (Non-Coder Friendly)
+# ZARISH HEALTH HIS v3: Comprehensive Setup & Management Guide (Non-Coder Friendly)
 
-This guide is designed for administrators and managers who are not developers. It provides step-by-step instructions on how to set up and manage the ZARISH HEALTH Hospital Information System (HIS).
+This guide is designed for administrators and managers who are not developers. It provides **step-by-step instructions** on how to set up and manage the ZARISH HEALTH Hospital Information System (HIS) from scratch.
 
 ---
 
